@@ -8,9 +8,9 @@
 #include <math.h>
 using namespace std;
 #define PI 3.14159265
-const int SCREEN_WIDTH = 1400;
-const int SCREEN_HEIGHT = 900;
-
+const int SCREEN_WIDTH = 800;
+const int SCREEN_HEIGHT = 500;
+//SDL_Rect *rect;
 class balls1
 {
   public:
@@ -26,15 +26,15 @@ class balls1
     {
     }
 };
-void showline(SDL_Renderer *renderer)
-{
-}
 void init(int *v)
 {
 }
 bool init();
 bool loadMedia();
 void close();
+SDL_Texture *texture;
+SDL_Event event;
+SDL_Rect r;
 SDL_Window *gWindow = NULL;
 SDL_Surface *gScreenSurface = NULL;
 SDL_Surface *gHelloWorld = NULL;
@@ -61,6 +61,17 @@ bool init()
     }
     return success;
 }
+bool loadMedia()
+{
+    bool success = true;
+    gHelloWorld = SDL_LoadBMP("ground.bmp");
+    if (gHelloWorld == NULL)
+    {
+        printf("Unable to load image %s! SDL Error: %s\n", " /home/mojtaba/Desktop/02_getting_an_image_on_the_screen/hello_world.bmp", SDL_GetError());
+        success = false;
+    }
+    return success;
+}
 void close()
 {
     SDL_FreeSurface(gHelloWorld);
@@ -78,15 +89,27 @@ int main()
     SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     balls1 a[5];
     SDL_SetRenderDrawColor(renderer, 0, 100, 158, SDL_ALPHA_OPAQUE);
-    while (true)
+    if (!init())
     {
-        //      filledCircleRGBA(renderer, , a[, a[i].dia, 255, 255, 255, 255);
-        //   showline(&renderer);
-        SDL_RenderDrawLine(renderer, 100, 200, 1300, 200);
-        SDL_RenderDrawLine(renderer, 1300, 200, 1300, 1300);
-        SDL_RenderDrawLine(renderer, 50, 850, 550, 850);
-        //        SDL_RenderDrawLine(renderer, 550, 100, 550, 850);
-        SDL_RenderPresent(renderer);
+        printf("Failed to initialize!\n");
     }
+    else
+    {
+        if (!loadMedia())
+        {
+            printf("Failed to load media!\n");
+        }
+        else
+        {
+            SDL_BlitSurface(gHelloWorld, NULL, gScreenSurface, NULL);
+            SDL_UpdateWindowSurface(gWindow);
+            SDL_Delay(2000);
+        }
+    }
+   /* while (true)
+    {
+        
+        SDL_RenderPresent(renderer);
+    }*/
     return 0;
 }
