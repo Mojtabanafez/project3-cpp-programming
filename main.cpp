@@ -90,6 +90,8 @@ bool loadMedia()
     }
     return success;
 }
+
+
 void close()
 {
     SDL_DestroyTexture(gTexture);
