@@ -8,7 +8,7 @@
 using namespace std;
 #define PI 3.14159265
 const int SCREEN_WIDTH = 800;
-const int SCREEN_HEIGHT = 500;
+const int SCREEN_HEIGHT = 700;
 class balls1
 {
   public:
@@ -120,8 +120,10 @@ SDL_Texture *loadTexture(std::string path)
     }
     return newTexture;
 }
-void showbackground()
+int main()
 {
+    SDL_Init(SDL_INIT_VIDEO);
+    balls1 a[5];
     if (!init())
     {
         printf("Failed to initialize!\n");
@@ -145,19 +147,22 @@ void showbackground()
                         quit = true;
                     }
                 }
+             //  SDL_Rect srcrect;
+               SDL_Rect dstrect;
+                dstrect.x=0;
+                dstrect.y=200;
+                dstrect.w=800;
+                dstrect.h=500;/*
+                srcrect.x = 300;
+                srcrect.y = 200;
+                srcrect.w = 800;
+                srcrect.h = 500;*/
                 SDL_RenderClear(gRenderer);
-                SDL_RenderCopy(gRenderer, gTexture, NULL, NULL);
+                SDL_RenderCopy(gRenderer, gTexture, NULL, &dstrect);
                 SDL_RenderPresent(gRenderer);
             }
         }
     }
-    close();
-}
-int main()
-{
-    SDL_Init(SDL_INIT_VIDEO);
-    balls1 a[5];
-   showbackground();
     close();
     return 0;
 }
