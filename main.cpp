@@ -81,6 +81,7 @@ void close()
     SDL_Quit();
 }
 
+
 int main()
 {
     SDL_Window *window = NULL;
