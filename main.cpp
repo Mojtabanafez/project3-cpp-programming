@@ -9,9 +9,10 @@ using namespace std;
 #define PI 3.14159265
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 500;
-class balls1
+class gTexture1
 {
   public:
+    SDL_Texture *gTextureball;
     int x;
     int y;
     int a;
@@ -19,17 +20,13 @@ class balls1
     int m;
     void intialize()
     {
+        
     }
     void move()
     {
-
     }
 };
-void init(int *v)
-{
-    
-}
-SDL_Texture *gTexture = NULL;
+SDL_Texture *gTextureGround = NULL;
 SDL_Window *gWindow = NULL;
 SDL_Surface *gScreenSurface = NULL;
 SDL_Texture *loadTexture(std::string path);
@@ -79,21 +76,41 @@ bool init()
     }
     return success;
 }
-bool loadMedia()
+bool loadMedia(gTexture1 a[5])
 {
     bool success = true;
-    gTexture = loadTexture("ground.png");
-    if (gTexture == NULL)
+    for(int i=0;i<5;i++)
+    {
+        a[i].gTextureball=loadTexture("ball.png");
+    }
+    for(int i=0;i<5;i++)
+    {
+        if(a[i].gTextureball==NULL)
+        {
+            printf("Failed to load texture image!\n");
+            success = false;
+        }
+    }
+    gTextureGround = loadTexture("ground.png");
+    if (gTextureGround == NULL)
     {
         printf("Failed to load texture image!\n");
         success = false;
     }
     return success;
 }
-void close()
+void close(gTexture1 a[5])
 {
-    SDL_DestroyTexture(gTexture);
-    gTexture = NULL;
+    for(int i=0;i<5;i++)
+    {
+        SDL_DestroyTexture(a[i].gTextureball);
+    }
+    for(int i=0;i<5;i++)
+    {
+        a[i].gTextureball=NULL;
+    }
+    SDL_DestroyTexture(gTextureGround);
+    gTextureGround = NULL;
     SDL_DestroyRenderer(gRenderer);
     SDL_DestroyWindow(gWindow);
     gWindow = NULL;
@@ -122,15 +139,20 @@ SDL_Texture *loadTexture(std::string path)
 }
 int main()
 {
+    gTexture1 a[5];
+
+    for (int i = 0; i < 5; i++)
+    {
+        a[i].gTextureball = NULL;
+    }
     SDL_Init(SDL_INIT_VIDEO);
-    balls1 a[5];
     if (!init())
     {
         printf("Failed to initialize!\n");
     }
     else
     {
-        if (!loadMedia())
+        if (!loadMedia(a))
         {
             printf("Failed to load media!\n");
         }
@@ -147,26 +169,23 @@ int main()
                         quit = true;
                     }
                 }
-                //  SDL_Rect srcrect;
                 SDL_Rect dstrect;
                 dstrect.x = 0;
                 dstrect.y = 0;
                 dstrect.w = 800;
                 dstrect.h = 500; 
                 SDL_RenderClear(gRenderer);
-                SDL_RenderCopy(gRenderer, gTexture, NULL, &dstrect);
-                SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, 0xFF);
-                SDL_RenderDrawLine(gRenderer, 67, 100, 67, 490);
-                //    filledCircleRGBA(gRenderer, a[j].x, a[j].y, a[j].dia, 255, 255, 255, 255);
+                SDL_RenderCopy(gRenderer, gTextureGround, NULL, &dstrect);
+                SDL_Rect srcrect;
 
-
-
-
-
+                for(int i=0;i<5;i++)
+                {
+                    SDL_RenderCopy(gRenderer,a[i].gTextureball,NULL,NULL);
+                }
                 SDL_RenderPresent(gRenderer);
             }
         }
     }
-    close();
+    close(a);
     return 0;
 }
