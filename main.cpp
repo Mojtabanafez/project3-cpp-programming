@@ -20,7 +20,6 @@ class gTexture1
     int m;
     void intialize()
     {
-        
     }
     void move()
     {
@@ -79,13 +78,13 @@ bool init()
 bool loadMedia(gTexture1 a[5])
 {
     bool success = true;
-    for(int i=0;i<5;i++)
+    for (int i = 0; i < 5; i++)
     {
-        a[i].gTextureball=loadTexture("ball.png");
+        a[i].gTextureball = loadTexture("ball.png");
     }
-    for(int i=0;i<5;i++)
+    for (int i = 0; i < 5; i++)
     {
-        if(a[i].gTextureball==NULL)
+        if (a[i].gTextureball == NULL)
         {
             printf("Failed to load texture image!\n");
             success = false;
@@ -101,13 +100,13 @@ bool loadMedia(gTexture1 a[5])
 }
 void close(gTexture1 a[5])
 {
-    for(int i=0;i<5;i++)
+    for (int i = 0; i < 5; i++)
     {
         SDL_DestroyTexture(a[i].gTextureball);
     }
-    for(int i=0;i<5;i++)
+    for (int i = 0; i < 5; i++)
     {
-        a[i].gTextureball=NULL;
+        a[i].gTextureball = NULL;
     }
     SDL_DestroyTexture(gTextureGround);
     gTextureGround = NULL;
@@ -137,10 +136,23 @@ SDL_Texture *loadTexture(std::string path)
     }
     return newTexture;
 }
+void InitialPositiom(gTexture1 a[5])
+{
+    a[0].x = ;
+    a[0].y = ;
+    a[1].x = ;
+    a[1].y = ;
+    a[2].x = ;
+    a[2].y = ;
+    a[3].x = ;
+    a[3].y = ;
+    a[4].x = ;
+    a[4].y = ;
+}
 int main()
 {
     gTexture1 a[5];
-
+    InitialPositiom(a);
     for (int i = 0; i < 5; i++)
     {
         a[i].gTextureball = NULL;
@@ -169,19 +181,23 @@ int main()
                         quit = true;
                     }
                 }
-                SDL_Rect dstrect;
-                dstrect.x = 0;
-                dstrect.y = 0;
-                dstrect.w = 800;
-                dstrect.h = 500; 
+                SDL_Rect dstrect1;
+                dstrect1.x = 0;
+                dstrect1.y = 0;
+                dstrect1.w = 800;
+                dstrect1.h = 500;
                 SDL_RenderClear(gRenderer);
-                SDL_RenderCopy(gRenderer, gTextureGround, NULL, &dstrect);
-                SDL_Rect srcrect;
-
-                for(int i=0;i<5;i++)
+                SDL_RenderCopy(gRenderer, gTextureGround, NULL, &dstrect1);
+                SDL_Rect dstrect2;
+                dstrect2.w = 40;
+                dstrect2.h = 40;
+                for (int i = 0; i < 5; i++)
                 {
-                    SDL_RenderCopy(gRenderer,a[i].gTextureball,NULL,NULL);
+                    dstrect2.x = a[i].x;
+                    dstrect2.y = a[i].y;
+                    SDL_RenderCopy(gRenderer, a[i].gTextureball, NULL, &dstrect2);
                 }
+                SDL_RenderCopy(gRenderer, a[0].gTextureball, NULL, &dstrect2);
                 SDL_RenderPresent(gRenderer);
             }
         }
