@@ -25,6 +25,7 @@ class gTexture1
     {
     }
 };
+
 SDL_Texture *gTextureGround = NULL;
 SDL_Window *gWindow = NULL;
 SDL_Surface *gScreenSurface = NULL;
@@ -138,16 +139,16 @@ SDL_Texture *loadTexture(std::string path)
 }
 void InitialPositiom(gTexture1 a[5])
 {
-    a[0].x = ;
-    a[0].y = ;
-    a[1].x = ;
-    a[1].y = ;
-    a[2].x = ;
-    a[2].y = ;
-    a[3].x = ;
-    a[3].y = ;
-    a[4].x = ;
-    a[4].y = ;
+    a[0].x =82 ;
+    a[0].y = 260;
+    a[1].x = 315;
+    a[1].y = 320;
+    a[2].x = 315;
+    a[2].y = 200;
+    a[3].x = 200;
+    a[3].y = 145;
+    a[4].x = 200;
+    a[4].y = 375;
 }
 int main()
 {
@@ -189,8 +190,8 @@ int main()
                 SDL_RenderClear(gRenderer);
                 SDL_RenderCopy(gRenderer, gTextureGround, NULL, &dstrect1);
                 SDL_Rect dstrect2;
-                dstrect2.w = 40;
-                dstrect2.h = 40;
+                dstrect2.w = 50;
+                dstrect2.h = 50;
                 for (int i = 0; i < 5; i++)
                 {
                     dstrect2.x = a[i].x;
