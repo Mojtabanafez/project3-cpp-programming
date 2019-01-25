@@ -155,8 +155,9 @@ int main()
                 dstrect.h = 500; 
                 SDL_RenderClear(gRenderer);
                 SDL_RenderCopy(gRenderer, gTexture, NULL, &dstrect);
-
-            //    filledCircleRGBA(gRenderer, a[j].x, a[j].y, a[j].dia, 255, 255, 255, 255);
+                SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, 0xFF);
+                SDL_RenderDrawLine(gRenderer, 67, 100, 67, 490);
+                //    filledCircleRGBA(gRenderer, a[j].x, a[j].y, a[j].dia, 255, 255, 255, 255);
 
 
 
