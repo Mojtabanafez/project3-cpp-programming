@@ -25,41 +25,30 @@ class gTexture1
     {
     }
 };
-const int BUTTON_WIDTH = 300;
-const int BUTTON_HEIGHT = 200;
-const int TOTAL_BUTTONS = 4;
-/*class LButton
+class gTexture2
 {
   public:
-    LButton();
-    void setPosition(int x, int y);
-    void handleEvent(SDL_Event *e);
-    void render();
-
-  private:
-    SDL_Point mPosition;
-};*/
+    SDL_Texture *gTextureball;
+    int x;
+    int y;
+    int a;
+    int v;
+    int m;
+    void intialize()
+    {
+    }
+    void move()
+    {
+    }
+};
 SDL_Texture *gTextureGround = NULL;
 SDL_Window *gWindow = NULL;
 SDL_Surface *gScreenSurface = NULL;
 SDL_Texture *loadTexture(std::string path);
 SDL_Renderer *gRenderer = NULL;
-//LButton gButtons[TOTAL_BUTTONS];
-//LTexture gButtonSpriteSheetTexture;
 bool init();
 bool loadMedia();
 void close();
-/*LButton::LButton()
-{
-    mPosition.x = 0;
-    mPosition.y = 0;
-    mCurrentSprite = BUTTON_SPRITE_MOUSE_OUT;
-}
-void LButton::setPosition(int x, int y)
-{
-    mPosition.x = x;
-    mPosition.y = y;
-}*/
 void handleEvent(SDL_Event *e, gTexture1 a[5])
 {
 }
@@ -105,9 +94,21 @@ bool init()
     }
     return success;
 }
-bool loadMedia(gTexture1 a[5])
+bool loadMedia(gTexture1 a[5], gTexture2 iran[5])
 {
     bool success = true;
+    for (int i = 0; i < 5; i++)
+    {
+        iran[i].gTextureball = loadTexture("ballsiran.png");
+    }
+    for (int i = 0; i < 5; i++)
+    {
+        if (iran[i].gTextureball == NULL)
+        {
+            printf("Failed to load texture image!\n");
+            success = false;
+        }
+    }
     for (int i = 0; i < 5; i++)
     {
         a[i].gTextureball = loadTexture("ball.png");
@@ -128,7 +129,7 @@ bool loadMedia(gTexture1 a[5])
     }
     return success;
 }
-void close(gTexture1 a[5])
+void close(gTexture1 a[5], gTexture2 iran[5])
 {
     for (int i = 0; i < 5; i++)
     {
@@ -137,6 +138,14 @@ void close(gTexture1 a[5])
     for (int i = 0; i < 5; i++)
     {
         a[i].gTextureball = NULL;
+    }
+    for (int i = 0; i < 5; i++)
+    {
+        SDL_DestroyTexture(iran[i].gTextureball);
+    }
+    for (int i = 0; i < 5; i++)
+    {
+        iran[i].gTextureball = NULL;
     }
     SDL_DestroyTexture(gTextureGround);
     gTextureGround = NULL;
@@ -166,7 +175,7 @@ SDL_Texture *loadTexture(std::string path)
     }
     return newTexture;
 }
-void InitialPositiom(gTexture1 a[5])
+void InitialPositiom(gTexture1 a[5], gTexture2 iran[5])
 {
     a[0].x = 82;
     a[0].y = 260;
@@ -178,18 +187,117 @@ void InitialPositiom(gTexture1 a[5])
     a[3].y = 145;
     a[4].x = 200;
     a[4].y = 375;
+
+    iran[0].x = 668;
+    iran[0].y = 260;
+    iran[1].x = 435;
+    iran[1].y = 320;
+    iran[2].x = 435;
+    iran[2].y = 200;
+    iran[3].x = 550;
+    iran[3].y = 145;
+    iran[4].x = 550;
+    iran[4].y = 375;
+}
+void showmap(gTexture1 a[5], gTexture2 iran[5])
+{
+    SDL_Rect dstrect1;
+    dstrect1.x = 0;
+    dstrect1.y = 0;
+    dstrect1.w = 800;
+    dstrect1.h = 500;
+    SDL_RenderClear(gRenderer);
+    SDL_RenderCopy(gRenderer, gTextureGround, NULL, &dstrect1);
+    SDL_Rect dstrect2;
+    dstrect2.w = 50;
+    dstrect2.h = 50;
+    for (int i = 0; i < 5; i++)
+    {
+        dstrect2.x = a[i].x;
+        dstrect2.y = a[i].y;
+        SDL_RenderCopy(gRenderer, a[i].gTextureball, NULL, &dstrect2);
+    }
+    for (int i = 0; i < 5; i++)
+    {
+        dstrect2.x = iran[i].x;
+        dstrect2.y = iran[i].y;
+        SDL_RenderCopy(gRenderer, iran[i].gTextureball, NULL, &dstrect2);
+    }
+}
+void drawcircleA(int i, double z, gTexture1 a[5])
+{
+    if (z < 22)
+    {
+        circleRGBA(gRenderer, a[i].x + 25, a[i].y + 25, 26, 255, 255, 255, 255);
+    }
+    else if (z < 80)
+    {
+        circleRGBA(gRenderer, a[i].x + 25, a[i].y + 25, 1.5 * z, 255, 255, 255, 255);
+        a[i].v = z / 15;
+    }
+    else
+    {
+        circleRGBA(gRenderer, a[i].x + 25, a[i].y + 25, 120, 255, 255, 255, 255);
+    }
+}
+void drawcircleiran(int i, double z, gTexture2 iran[5])
+{
+    if (z < 22)
+    {
+        circleRGBA(gRenderer, iran[i].x + 25, iran[i].y + 25, 26, 255, 255, 255, 255);
+    }
+    else if (z < 80)
+    {
+        circleRGBA(gRenderer, iran[i].x + 25, iran[i].y + 25, 1.5 * z, 255, 255, 255, 255);
+        iran[i].v = z / 15;
+    }
+    else
+    {
+        circleRGBA(gRenderer, iran[i].x + 25, iran[i].y + 25, 120, 255, 255, 255, 255);
+    }
+}
+void drawlineA(gTexture1 a[5],double m,double z,int i)
+{
+    double o = z;
+    if (z > 80)
+    {
+        o = 80;
+    }
+    float e = 0;
+    for (float p = 25 * sqrt(1 / (m * m + 1)), e = 25 * sqrt((m * m) / (m * m + 1)); p < o * (sqrt(1 / (m * m + 1))), e < o * (sqrt((m * m) / (m * m + 1)));)
+    {
+        cout << 2 << endl;
+        SDL_RenderDrawPoint(gRenderer, a[i].x + p + 25, a[i].y + 25 + e);
+        e += 2 * sqrt((m * m) / (m * m + 1));
+        p += 2 * sqrt(1 / (m * m + 1));
+    }
+}
+void drawlineIRAN(gTexture2 iran[5], double m, double z, int i)
+{
+    double o = z;
+    if (z > 80)
+    {
+        o = 80;
+    }
+    float e = 0;
+    for (float p = 25 * sqrt(1 / (m * m + 1)), e = 25 * sqrt((m * m) / (m * m + 1)); p < o * (sqrt(1 / (m * m + 1))), e < o * (sqrt((m * m) / (m * m + 1)));)
+    {
+        cout << 2 << endl;
+        SDL_RenderDrawPoint(gRenderer, iran[i].x + p + 25, iran[i].y + 25 + e);
+        e += 2 * sqrt((m * m) / (m * m + 1));
+        p += 2 * sqrt(1 / (m * m + 1));
+    }
 }
 int main()
 {
     gTexture1 a[5];
-    cout << 1 << endl;
-    InitialPositiom(a);
-    cout << 2 << endl;
+    gTexture2 iran[5];
+    InitialPositiom(a, iran);
     for (int i = 0; i < 5; i++)
     {
         a[i].gTextureball = NULL;
+        iran[i].gTextureball = NULL;
     }
-    cout << 3 << endl;
     SDL_Init(SDL_INIT_VIDEO);
     if (!init())
     {
@@ -197,7 +305,7 @@ int main()
     }
     else
     {
-        if (!loadMedia(a))
+        if (!loadMedia(a, iran))
         {
             printf("Failed to load media!\n");
         }
@@ -208,25 +316,7 @@ int main()
             SDL_Event q;
             while (!quit)
             {
-                //      handleEvent(SDL_Event e, gTexture1 a[5]);
-
-                SDL_Rect dstrect1;
-                dstrect1.x = 0;
-                dstrect1.y = 0;
-                dstrect1.w = 800;
-                dstrect1.h = 500;
-                SDL_RenderClear(gRenderer);
-                SDL_RenderCopy(gRenderer, gTextureGround, NULL, &dstrect1);
-                SDL_Rect dstrect2;
-                dstrect2.w = 50;
-                dstrect2.h = 50;
-                for (int i = 0; i < 5; i++)
-                {
-                    dstrect2.x = a[i].x;
-                    dstrect2.y = a[i].y;
-                    SDL_RenderCopy(gRenderer, a[i].gTextureball, NULL, &dstrect2);
-                }
-                SDL_RenderCopy(gRenderer, a[0].gTextureball, NULL, &dstrect2);
+                showmap(a, iran);
                 SDL_RenderPresent(gRenderer);
                 if (SDL_PollEvent(&e) != 0)
                 {
@@ -257,29 +347,11 @@ int main()
 
                                         while (flag)
                                         {
-                                            cout << "7\n";
-                                            SDL_Rect dstrect1;
-                                            dstrect1.x = 0;
-                                            dstrect1.y = 0;
-                                            dstrect1.w = 800;
-                                            dstrect1.h = 500;
-                                            SDL_RenderClear(gRenderer);
-                                            SDL_RenderCopy(gRenderer, gTextureGround, NULL, &dstrect1);
-                                            SDL_Rect dstrect2;
-                                            dstrect2.w = 50;
-                                            dstrect2.h = 50;
-                                            for (int j = 0; j < 5; j++)
-                                            {
-                                                dstrect2.x = a[j].x;
-                                                dstrect2.y = a[j].y;
-                                                SDL_RenderCopy(gRenderer, a[j].gTextureball, NULL, &dstrect2);
-                                            }
-                                            SDL_RenderCopy(gRenderer, a[0].gTextureball, NULL, &dstrect2);
+                                            showmap(a, iran);
                                             if (SDL_PollEvent(&q) != 0)
                                             {
                                                 if (q.type == SDL_MOUSEBUTTONUP)
                                                 {
-                                                    cout << "up";
                                                     flag = false;
                                                 }
                                                 if (q.type == SDL_QUIT)
@@ -288,41 +360,14 @@ int main()
                                                     break;
                                                 }
                                             }
-                                            cout << 9 << endl;
                                             SDL_GetMouseState(&x, &y);
                                             z = sqrt(((x - a[i].x - 25) * (x - a[i].x - 25)) + ((y - a[i].y - 25) * (y - a[i].y - 25)));
-                                            if (z < 22)
-                                            {
-                                                circleRGBA(gRenderer, a[i].x + 25, a[i].y + 25, 26, 255, 255, 255, 255);
-                                            }
-                                            else if (z < 80)
-                                            {
-                                                circleRGBA(gRenderer, a[i].x + 25, a[i].y + 25, 1.5 * z, 255, 255, 255, 255);
-                                                a[i].v = z / 15;
-                                            }
-                                            else
-                                            {
-                                                circleRGBA(gRenderer, a[i].x + 25, a[i].y + 25, 120, 255, 255, 255, 255);
-                                            }
-                                            cout << 6 << endl;
+                                            drawcircleA(i, z, a);
                                             if (x - 25 != a[i].x)
+                                            {
                                                 m = (y - a[i].y - 25) / (x - a[i].x - 25);
-                                            cout << 23 << endl;
-                                            double o = z;
-                                            if (z > 80)
-                                            {
-                                                o = 80;
                                             }
-
-                                            float e = 0;
-                                            for (float p = 25 * sqrt(1 / (m * m + 1)), e = 25 * sqrt((m * m) / (m * m + 1)); p < o * (sqrt(1 / (m * m + 1))), e < o * (sqrt((m * m) / (m * m + 1)));)
-                                            {
-                                                cout << 2 << endl;
-                                                SDL_RenderDrawPoint(gRenderer, a[i].x + p + 25, a[i].y + 25 + e);
-                                                e += 2 * sqrt((m * m) / (m * m + 1));
-                                                p += 2 * sqrt(1 / (m * m + 1));
-                                            }
-                                            cout << 0 << endl;
+                                            drawlineA(a,m,z,i);
                                             SDL_RenderPresent(gRenderer);
                                             SDL_RenderClear(gRenderer);
                                         }
@@ -335,6 +380,6 @@ int main()
             }
         }
     }
-    close(a);
+    close(a, iran);
     return 0;
 }
