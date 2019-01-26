@@ -234,35 +234,11 @@ int main()
                     int y = 0;
                     double m = 0;
                     if (e.type == SDL_MOUSEMOTION || e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP)
-                    { /*
+                    { 
                         if (e.type == SDL_QUIT)
                         {
                             quit = true;
                         }
-                        int x, y;
-                        SDL_GetMouseState(&x, &y);
-                        bool inside = true;
-                        if (x < 0)
-                        {
-                            inside = false;
-                        }
-                        else if (x > 500)
-                        {
-                            inside = false;
-                        }
-                        else if (y < 0)
-                        {
-                            inside = false;
-                        }
-                        else if (y > 800)
-                        {
-                            inside = false;
-                        }
-                        if (!inside)
-                        {
-                            ;
-                        }
-                        else*/
                         int x, y;
                         SDL_GetMouseState(&x, &y);
                         {
@@ -277,6 +253,7 @@ int main()
 
                                         while (flag)
                                         {
+                                          //  cout<<"flag";
                                             SDL_Rect dstrect1;
                                             dstrect1.x = 0;
                                             dstrect1.y = 0;
@@ -294,9 +271,9 @@ int main()
                                                 SDL_RenderCopy(gRenderer, a[i].gTextureball, NULL, &dstrect2);
                                             }
                                             SDL_RenderCopy(gRenderer, a[0].gTextureball, NULL, &dstrect2);
-                                            SDL_RenderPresent(gRenderer);
                                             if (e.type == SDL_MOUSEBUTTONUP)
                                             {
+                                                cout<<"up";
                                                 flag = false;
                                             }
                                             if (e.type == SDL_QUIT)
@@ -306,7 +283,11 @@ int main()
                                             }
                                             SDL_GetMouseState(&x, &y);
                                             y = sqrt(((x - a[i].x - 25) * (x - a[i].x - 25)) + ((y - a[i].y - 25) * (y - a[i].y - 25)));
-                                            if (y < 80)
+                                            if(y<22)
+                                            {
+                                                filledCircleRGBA(gRenderer, a[i].x + 25, a[i].y + 25, 26, 255, 255, 255, 255);
+                                            }
+                                            else if (y < 80)
                                             {
                                                 filledCircleRGBA(gRenderer, a[i].x + 25, a[i].y + 25, y, 255, 255, 255, 255);
                                                 a[i].v = y / 15;
@@ -324,6 +305,7 @@ int main()
                                             float e = 0;
                                             for (float p = 25 * sqrt(1 / (m * m + 1)), e = 25 * sqrt((m * m) / (m * m + 1)); p < o * (sqrt(1 / (m * m + 1))), e < o * (sqrt((m * m) / (m * m + 1)));)
                                             {
+                                                cout<<"kgg";
                                                 SDL_RenderDrawPoint(gRenderer, a[i].x + p, a[i].y + e);
                                                 e += 4 * sqrt((m * m) / (m * m + 1));
                                                 p += 4 * sqrt(1 / (m * m + 1));
