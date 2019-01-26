@@ -224,7 +224,7 @@ int main()
                 }
                 SDL_RenderCopy(gRenderer, a[0].gTextureball, NULL, &dstrect2);
                 SDL_RenderPresent(gRenderer);
-                while (SDL_PollEvent(&e) != 0)
+                if (SDL_PollEvent(&e) != 0)
                 {
                     if (e.type == SDL_QUIT)
                     {
@@ -234,7 +234,7 @@ int main()
                     int y = 0;
                     double m = 0;
                     if (e.type == SDL_MOUSEMOTION || e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP)
-                    {
+                    { /*
                         if (e.type == SDL_QUIT)
                         {
                             quit = true;
@@ -262,23 +262,49 @@ int main()
                         {
                             ;
                         }
-                        else
+                        else*/
+                        int x, y;
+                        SDL_GetMouseState(&x, &y);
                         {
                             for (int i = 0; i < 5; i++)
                             {
                                 if (((x - a[i].x - 25) * (x - a[i].x - 25)) + ((y - a[i].y - 25) * (y - a[i].y - 25)) < 625)
                                 {
+                                    bool flag=false;
                                     if (e.type == SDL_MOUSEBUTTONDOWN)
                                     {
-                                        while (e.type != SDL_MOUSEBUTTONUP)
+                                         flag = true;
+
+                                        while (flag)
                                         {
+                                            SDL_Rect dstrect1;
+                                            dstrect1.x = 0;
+                                            dstrect1.y = 0;
+                                            dstrect1.w = 800;
+                                            dstrect1.h = 500;
+                                            SDL_RenderClear(gRenderer);
+                                            SDL_RenderCopy(gRenderer, gTextureGround, NULL, &dstrect1);
+                                            SDL_Rect dstrect2;
+                                            dstrect2.w = 50;
+                                            dstrect2.h = 50;
+                                            for (int i = 0; i < 5; i++)
+                                            {
+                                                dstrect2.x = a[i].x;
+                                                dstrect2.y = a[i].y;
+                                                SDL_RenderCopy(gRenderer, a[i].gTextureball, NULL, &dstrect2);
+                                            }
+                                            SDL_RenderCopy(gRenderer, a[0].gTextureball, NULL, &dstrect2);
+                                            SDL_RenderPresent(gRenderer);
+                                            if (e.type == SDL_MOUSEBUTTONUP)
+                                            {
+                                                flag = false;
+                                            }
                                             if (e.type == SDL_QUIT)
                                             {
                                                 quit = true;
                                                 break;
                                             }
                                             SDL_GetMouseState(&x, &y);
-
                                             y = sqrt(((x - a[i].x - 25) * (x - a[i].x - 25)) + ((y - a[i].y - 25) * (y - a[i].y - 25)));
                                             if (y < 80)
                                             {
@@ -302,6 +328,8 @@ int main()
                                                 e += 4 * sqrt((m * m) / (m * m + 1));
                                                 p += 4 * sqrt(1 / (m * m + 1));
                                             }
+                                            SDL_RenderPresent(gRenderer);
+                                            SDL_RenderClear(gRenderer);
                                         }
                                     }
                                 }
