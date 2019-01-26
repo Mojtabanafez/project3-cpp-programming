@@ -256,7 +256,7 @@ void drawcircleiran(int i, double z, gTexture2 iran[5])
         circleRGBA(gRenderer, iran[i].x + 25, iran[i].y + 25, 120, 255, 255, 255, 255);
     }
 }
-void drawlineA(gTexture1 a[5],double m,double z,int i)
+void drawlineA(gTexture1 a[5], double m, double z, int i)
 {
     double o = z;
     if (z > 80)
@@ -266,13 +266,12 @@ void drawlineA(gTexture1 a[5],double m,double z,int i)
     float e = 0;
     for (float p = 25 * sqrt(1 / (m * m + 1)), e = 25 * sqrt((m * m) / (m * m + 1)); p < o * (sqrt(1 / (m * m + 1))), e < o * (sqrt((m * m) / (m * m + 1)));)
     {
-        cout << 2 << endl;
         SDL_RenderDrawPoint(gRenderer, a[i].x + p + 25, a[i].y + 25 + e);
         e += 2 * sqrt((m * m) / (m * m + 1));
         p += 2 * sqrt(1 / (m * m + 1));
     }
 }
-void drawlineIRAN(gTexture2 iran[5], double m, double z, int i)
+void drawlineiran(gTexture2 iran[5], double m, double z, int i)
 {
     double o = z;
     if (z > 80)
@@ -282,7 +281,6 @@ void drawlineIRAN(gTexture2 iran[5], double m, double z, int i)
     float e = 0;
     for (float p = 25 * sqrt(1 / (m * m + 1)), e = 25 * sqrt((m * m) / (m * m + 1)); p < o * (sqrt(1 / (m * m + 1))), e < o * (sqrt((m * m) / (m * m + 1)));)
     {
-        cout << 2 << endl;
         SDL_RenderDrawPoint(gRenderer, iran[i].x + p + 25, iran[i].y + 25 + e);
         e += 2 * sqrt((m * m) / (m * m + 1));
         p += 2 * sqrt(1 / (m * m + 1));
@@ -290,6 +288,9 @@ void drawlineIRAN(gTexture2 iran[5], double m, double z, int i)
 }
 int main()
 {
+    bool flag = false;
+    bool flag2 = true;
+    int turn = 2;
     gTexture1 a[5];
     gTexture2 iran[5];
     InitialPositiom(a, iran);
@@ -324,58 +325,137 @@ int main()
                     {
                         quit = true;
                     }
-                    int r = 0;
-                    double z = 0;
-                    double m = 0;
-                    if (e.type == SDL_MOUSEMOTION || e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP)
+                    if (flag2)
                     {
-                        if (e.type == SDL_QUIT)
+                        int r = 0;
+                        double z = 0;
+                        double m = 0;
+                        if (e.type == SDL_MOUSEMOTION || e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP)
                         {
-                            quit = true;
-                        }
-                        int x, y;
-                        SDL_GetMouseState(&x, &y);
-                        {
-                            for (int i = 0; i < 5; i++)
+                            if (e.type == SDL_QUIT)
                             {
-                                if (((x - a[i].x - 25) * (x - a[i].x - 25)) + ((y - a[i].y - 25) * (y - a[i].y - 25)) < 625)
+                                quit = true;
+                            }
+                            {
+                                cout << 2 << endl;
+                                if (e.type == SDL_QUIT)
                                 {
-                                    bool flag = false;
-                                    if (e.type == SDL_MOUSEBUTTONDOWN)
+                                    quit = true;
+                                }
+                                int x, y;
+                                SDL_GetMouseState(&x, &y);
+                                {
+                                    cout << 123 << endl;
+                                    for (int i = 0; i < 5; i++)
                                     {
-                                        flag = true;
-
-                                        while (flag)
+                                        cout << 9 << endl;
+                                        if (((x - a[i].x - 25) * (x - a[i].x - 25)) + ((y - a[i].y - 25) * (y - a[i].y - 25)) < 625)
                                         {
-                                            showmap(a, iran);
-                                            if (SDL_PollEvent(&q) != 0)
+
+                                            cout << 5 << endl;
+                                            if (e.type == SDL_MOUSEBUTTONDOWN)
                                             {
-                                                if (q.type == SDL_MOUSEBUTTONUP)
+                                                flag = true;
+
+                                                while (flag)
                                                 {
-                                                    flag = false;
-                                                }
-                                                if (q.type == SDL_QUIT)
-                                                {
-                                                    quit = true;
-                                                    break;
+                                                    cout << 3 << endl;
+                                                    showmap(a, iran);
+                                                    if (SDL_PollEvent(&q) != 0)
+                                                    {
+                                                        if (q.type == SDL_MOUSEBUTTONUP)
+                                                        {
+                                                            if (sqrt(((x - a[i].x - 25) * (x - a[i].x - 25)) + ((y - a[i].y - 25) * (y - a[i].y - 25)))>25)
+                                                            {
+                                                                flag2 = false;
+                                                            }
+                                                            flag = false;
+                                                        }
+                                                        if (q.type == SDL_QUIT)
+                                                        {
+                                                            flag2 = false;
+                                                            quit = true;
+                                                            break;
+                                                        }
+                                                    }
+                                                    SDL_GetMouseState(&x, &y);
+                                                    z = sqrt(((x - a[i].x - 25) * (x - a[i].x - 25)) + ((y - a[i].y - 25) * (y - a[i].y - 25)));
+                                                    drawcircleA(i, z, a);
+                                                    if (x - 25 != a[i].x)
+                                                    {
+                                                        m = (y - a[i].y - 25) / (x - a[i].x - 25);
+                                                    }
+                                                    drawlineA(a, m, z, i);
+                                                    SDL_RenderPresent(gRenderer);
+                                                    SDL_RenderClear(gRenderer);
                                                 }
                                             }
-                                            SDL_GetMouseState(&x, &y);
-                                            z = sqrt(((x - a[i].x - 25) * (x - a[i].x - 25)) + ((y - a[i].y - 25) * (y - a[i].y - 25)));
-                                            drawcircleA(i, z, a);
-                                            if (x - 25 != a[i].x)
-                                            {
-                                                m = (y - a[i].y - 25) / (x - a[i].x - 25);
-                                            }
-                                            drawlineA(a,m,z,i);
-                                            SDL_RenderPresent(gRenderer);
-                                            SDL_RenderClear(gRenderer);
                                         }
                                     }
                                 }
                             }
                         }
                     }
+                    else
+                    {
+                        cout << 0 << endl;
+                        //   int r = 0;
+                        double z = 0;
+                        double m = 0;
+                        if (e.type == SDL_MOUSEMOTION || e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP)
+                        {
+                            if (e.type == SDL_QUIT)
+                            {
+                                quit = true;
+                            }
+                            int x, y;
+                            SDL_GetMouseState(&x, &y);
+                            {
+                                for (int i = 0; i < 5; i++)
+                                {
+                                    if (((x - iran[i].x - 25) * (x - iran[i].x - 25)) + ((y - iran[i].y - 25) * (y - iran[i].y - 25)) < 625)
+                                    {
+                                        bool flag = false;
+                                        if (e.type == SDL_MOUSEBUTTONDOWN)
+                                        {
+                                            flag = true;
+                                            while (flag)
+                                            {
+                                                showmap(a, iran);
+                                                if (SDL_PollEvent(&q) != 0)
+                                                {
+                                                    if (q.type == SDL_MOUSEBUTTONUP)
+                                                    {
+                                                        flag = false;
+                                                        if (sqrt(((x - iran[i].x - 25) * (x - iran[i].x - 25)) + ((y - iran[i].y - 25) * (y - iran[i].y - 25))) > 25)
+                                                        {
+                                                            flag2 = true;
+                                                        }
+                                                    }
+                                                    if (q.type == SDL_QUIT)
+                                                    {
+                                                        quit = true;
+                                                        break;
+                                                    }
+                                                }
+                                                SDL_GetMouseState(&x, &y);
+                                                z = sqrt(((x - iran[i].x - 25) * (x - iran[i].x - 25)) + ((y - iran[i].y - 25) * (y - iran[i].y - 25)));
+                                                drawcircleiran(i, z, iran);
+                                                if (x - 25 != iran[i].x)
+                                                {
+                                                    m = (y - iran[i].y - 25) / (x - iran[i].x - 25);
+                                                }
+                                                drawlineiran(iran, m, z, i);
+                                                SDL_RenderPresent(gRenderer);
+                                                SDL_RenderClear(gRenderer);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    turn++;
                 }
             }
         }
