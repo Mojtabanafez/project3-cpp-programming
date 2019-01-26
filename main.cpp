@@ -202,6 +202,7 @@ int main()
         {
             bool quit = false;
             SDL_Event e;
+            SDL_Event q;
             while (!quit)
             {
                 //      handleEvent(SDL_Event e, gTexture1 a[5]);
@@ -253,7 +254,6 @@ int main()
 
                                         while (flag)
                                         {
-                                          //  cout<<"flag";
                                             SDL_Rect dstrect1;
                                             dstrect1.x = 0;
                                             dstrect1.y = 0;
@@ -271,47 +271,50 @@ int main()
                                                 SDL_RenderCopy(gRenderer, a[i].gTextureball, NULL, &dstrect2);
                                             }
                                             SDL_RenderCopy(gRenderer, a[0].gTextureball, NULL, &dstrect2);
-                                            if (e.type == SDL_MOUSEBUTTONUP)
+                                            if (SDL_PollEvent(&q) != 0)
                                             {
-                                                cout<<"up";
-                                                flag = false;
+                                                if (q.type == SDL_MOUSEBUTTONUP)
+                                                {
+                                                    cout << "up";
+                                                    flag = false;
+                                                }
+                                                if (q.type == SDL_QUIT)
+                                                {
+                                                    quit = true;
+                                                    break;
+                                                }
                                             }
-                                            if (e.type == SDL_QUIT)
-                                            {
-                                                quit = true;
-                                                break;
-                                            }
-                                            SDL_GetMouseState(&x, &y);
-                                            y = sqrt(((x - a[i].x - 25) * (x - a[i].x - 25)) + ((y - a[i].y - 25) * (y - a[i].y - 25)));
-                                            if(y<22)
-                                            {
-                                                filledCircleRGBA(gRenderer, a[i].x + 25, a[i].y + 25, 26, 255, 255, 255, 255);
-                                            }
-                                            else if (y < 80)
-                                            {
-                                                filledCircleRGBA(gRenderer, a[i].x + 25, a[i].y + 25, y, 255, 255, 255, 255);
-                                                a[i].v = y / 15;
-                                            }
-                                            else
-                                            {
-                                                filledCircleRGBA(gRenderer, a[i].x + 25, a[i].y + 25, 80, 255, 255, 255, 255);
-                                            }
-                                            m = (y - a[i].y - 25) / (x - a[i].x - 25);
-                                            int o = y;
-                                            if (y > 80)
-                                            {
-                                                o = 80;
-                                            }
-                                            float e = 0;
-                                            for (float p = 25 * sqrt(1 / (m * m + 1)), e = 25 * sqrt((m * m) / (m * m + 1)); p < o * (sqrt(1 / (m * m + 1))), e < o * (sqrt((m * m) / (m * m + 1)));)
-                                            {
-                                                cout<<"kgg";
-                                                SDL_RenderDrawPoint(gRenderer, a[i].x + p, a[i].y + e);
-                                                e += 4 * sqrt((m * m) / (m * m + 1));
-                                                p += 4 * sqrt(1 / (m * m + 1));
-                                            }
-                                            SDL_RenderPresent(gRenderer);
-                                            SDL_RenderClear(gRenderer);
+                                              
+                                                SDL_GetMouseState(&x, &y);
+                                                y = sqrt(((x - a[i].x - 25) * (x - a[i].x - 25)) + ((y - a[i].y - 25) * (y - a[i].y - 25)));
+                                                if (y < 22)
+                                                {
+                                                   filledCircleRGBA(gRenderer, a[i].x + 25, a[i].y + 25, 26, 255, 255, 255, 255);
+                                                }
+                                                else if (y < 80)
+                                                {
+                                                    filledCircleRGBA(gRenderer, a[i].x + 25, a[i].y + 25, 1.5*y, 255, 255, 255, 255);
+                                                    a[i].v = y / 15;
+                                                }
+                                                else
+                                                {
+                                                    filledCircleRGBA(gRenderer, a[i].x + 25, a[i].y + 25, 120, 255, 255, 255, 255);
+                                                }
+                                                m = (y - a[i].y - 25) / (x - a[i].x - 25);
+                                                int o = y;
+                                                if (y > 80)
+                                                {
+                                                    o = 80;
+                                                }
+                                                float e = 0;
+                                                for (float p = 25 * sqrt(1 / (m * m + 1)), e = 25 * sqrt((m * m) / (m * m + 1)); p < o * (sqrt(1 / (m * m + 1))), e < o * (sqrt((m * m) / (m * m + 1)));)
+                                                {
+                                                    SDL_RenderDrawPoint(gRenderer, a[i].x + p+25, a[i].y+25 + e);
+                                                    e += 2 * sqrt((m * m) / (m * m + 1));
+                                                    p += 2 * sqrt(1 / (m * m + 1));
+                                                }
+                                                SDL_RenderPresent(gRenderer);
+                                                SDL_RenderClear(gRenderer);
                                         }
                                     }
                                 }
