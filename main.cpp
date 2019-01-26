@@ -25,15 +25,44 @@ class gTexture1
     {
     }
 };
+const int BUTTON_WIDTH = 300;
+const int BUTTON_HEIGHT = 200;
+const int TOTAL_BUTTONS = 4;
+/*class LButton
+{
+  public:
+    LButton();
+    void setPosition(int x, int y);
+    void handleEvent(SDL_Event *e);
+    void render();
 
+  private:
+    SDL_Point mPosition;
+};*/
 SDL_Texture *gTextureGround = NULL;
 SDL_Window *gWindow = NULL;
 SDL_Surface *gScreenSurface = NULL;
 SDL_Texture *loadTexture(std::string path);
 SDL_Renderer *gRenderer = NULL;
+//LButton gButtons[TOTAL_BUTTONS];
+//LTexture gButtonSpriteSheetTexture;
 bool init();
 bool loadMedia();
 void close();
+/*LButton::LButton()
+{
+    mPosition.x = 0;
+    mPosition.y = 0;
+    mCurrentSprite = BUTTON_SPRITE_MOUSE_OUT;
+}
+void LButton::setPosition(int x, int y)
+{
+    mPosition.x = x;
+    mPosition.y = y;
+}*/
+void handleEvent(SDL_Event *e, gTexture1 a[5])
+{
+}
 bool init()
 {
     bool success = true;
@@ -139,7 +168,7 @@ SDL_Texture *loadTexture(std::string path)
 }
 void InitialPositiom(gTexture1 a[5])
 {
-    a[0].x =82 ;
+    a[0].x = 82;
     a[0].y = 260;
     a[1].x = 315;
     a[1].y = 320;
@@ -175,13 +204,8 @@ int main()
             SDL_Event e;
             while (!quit)
             {
-                while (SDL_PollEvent(&e) != 0)
-                {
-                    if (e.type == SDL_QUIT)
-                    {
-                        quit = true;
-                    }
-                }
+                //      handleEvent(SDL_Event e, gTexture1 a[5]);
+
                 SDL_Rect dstrect1;
                 dstrect1.x = 0;
                 dstrect1.y = 0;
@@ -200,6 +224,92 @@ int main()
                 }
                 SDL_RenderCopy(gRenderer, a[0].gTextureball, NULL, &dstrect2);
                 SDL_RenderPresent(gRenderer);
+                while (SDL_PollEvent(&e) != 0)
+                {
+                    if (e.type == SDL_QUIT)
+                    {
+                        quit = true;
+                    }
+                    int r = 0;
+                    int y = 0;
+                    double m = 0;
+                    if (e.type == SDL_MOUSEMOTION || e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP)
+                    {
+                        if (e.type == SDL_QUIT)
+                        {
+                            quit = true;
+                        }
+                        int x, y;
+                        SDL_GetMouseState(&x, &y);
+                        bool inside = true;
+                        if (x < 0)
+                        {
+                            inside = false;
+                        }
+                        else if (x > 500)
+                        {
+                            inside = false;
+                        }
+                        else if (y < 0)
+                        {
+                            inside = false;
+                        }
+                        else if (y > 800)
+                        {
+                            inside = false;
+                        }
+                        if (!inside)
+                        {
+                            ;
+                        }
+                        else
+                        {
+                            for (int i = 0; i < 5; i++)
+                            {
+                                if (((x - a[i].x - 25) * (x - a[i].x - 25)) + ((y - a[i].y - 25) * (y - a[i].y - 25)) < 625)
+                                {
+                                    if (e.type == SDL_MOUSEBUTTONDOWN)
+                                    {
+                                        while (e.type != SDL_MOUSEBUTTONUP)
+                                        {
+                                            if (e.type == SDL_QUIT)
+                                            {
+                                                quit = true;
+                                                break;
+                                            }
+                                            SDL_GetMouseState(&x, &y);
+
+                                            y = sqrt(((x - a[i].x - 25) * (x - a[i].x - 25)) + ((y - a[i].y - 25) * (y - a[i].y - 25)));
+                                            if (y < 80)
+                                            {
+                                                filledCircleRGBA(gRenderer, a[i].x + 25, a[i].y + 25, y, 255, 255, 255, 255);
+                                                a[i].v = y / 15;
+                                            }
+                                            else
+                                            {
+                                                filledCircleRGBA(gRenderer, a[i].x + 25, a[i].y + 25, 80, 255, 255, 255, 255);
+                                            }
+                                            m = (y - a[i].y - 25) / (x - a[i].x - 25);
+                                            int o = y;
+                                            if (y > 80)
+                                            {
+                                                o = 80;
+                                            }
+                                            float e = 0;
+                                            for (float p = 25 * sqrt(1 / (m * m + 1)), e = 25 * sqrt((m * m) / (m * m + 1)); p < o * (sqrt(1 / (m * m + 1))), e < o * (sqrt((m * m) / (m * m + 1)));)
+                                            {
+                                                SDL_RenderDrawPoint(gRenderer, a[i].x + p, a[i].y + e);
+                                                e += 4 * sqrt((m * m) / (m * m + 1));
+                                                p += 4 * sqrt(1 / (m * m + 1));
+                                            }
+                                            
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
