@@ -25,6 +25,7 @@ class gTexture1
     {
     }
 };
+<<<<<<< HEAD
 const int BUTTON_WIDTH = 300;
 const int BUTTON_HEIGHT = 200;
 const int TOTAL_BUTTONS = 4;
@@ -35,6 +36,24 @@ const int TOTAL_BUTTONS = 4;
     void setPosition(int x, int y);
     void handleEvent(SDL_Event *e);
     void render();
+=======
+class gTexture2
+{
+  public:
+    SDL_Texture *gTextureball1;
+    int x;
+    int y;
+    int a;
+    int v;
+    int m;
+    void intialize()
+    {
+    }
+    void move()
+    {
+    }
+};
+>>>>>>> 89d45afaa341c923bb413ac838483ab62088afa8
 
   private:
     SDL_Point mPosition;
@@ -88,7 +107,7 @@ bool init()
             gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
             if (gRenderer == NULL)
             {
-                printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
+                printf("Rendereracould not be created! SDL Error: %s\n", SDL_GetError());
                 success = false;
             }
             else
@@ -147,6 +166,48 @@ void close(gTexture1 a[5])
     IMG_Quit();
     SDL_Quit();
 }
+bool loadMedia(gTexture2 b[5])
+{
+    bool success = true;
+    for (int i = 0; i < 5; i++)
+    {
+        b[i].gTextureball1 = loadTexture("ball1.png");
+    }
+    for (int i = 0; i < 5; i++)
+    {
+        if (b[i].gTextureball1 == NULL)
+        {
+            printf("Failed to load texture image!\n");
+            success = false;
+        }
+    }
+    gTextureGround = loadTexture("ground.png");
+    if (gTextureGround == NULL)
+    {
+        printf("Failed to load texture image!\n");
+        success = false;
+    }
+    return success;
+}
+void close(gTexture2 b[5])
+{
+    for (int i = 0; i < 5; i++)
+    {
+        SDL_DestroyTexture(b[i].gTextureball1);
+    }
+    for (int i = 0; i < 5; i++)
+    {
+        b[i].gTextureball1 = NULL;
+    }
+    SDL_DestroyTexture(gTextureGround);
+    gTextureGround = NULL;
+    SDL_DestroyRenderer(gRenderer);
+    SDL_DestroyWindow(gWindow);
+    gWindow = NULL;
+    gRenderer = NULL;
+    IMG_Quit();
+    SDL_Quit();
+}
 SDL_Texture *loadTexture(std::string path)
 {
     SDL_Texture *newTexture = NULL;
@@ -179,13 +240,28 @@ void InitialPositiom(gTexture1 a[5])
     a[4].x = 200;
     a[4].y = 375;
 }
+void InitialPositiom(gTexture2 b[5])
+{
+    b[0].x = 660 ;
+    b[0].y = 400;
+    b[1].x = 315;
+    b[1].y = 320;
+    b[2].x = 315;
+    b[2].y = 200;
+    b[3].x = 200;
+    b[3].y = 145;
+    b[4].x = 200;
+    b[4].y = 375;
+}
 int main()
 {
     gTexture1 a[5];
+    gTexture2 b[5];
     InitialPositiom(a);
     for (int i = 0; i < 5; i++)
     {
         a[i].gTextureball = NULL;
+        b[i].gTextureball1 = NULL;
     }
     SDL_Init(SDL_INIT_VIDEO);
     if (!init())
@@ -194,7 +270,7 @@ int main()
     }
     else
     {
-        if (!loadMedia(a))
+        if (!loadMedia(a)and!loadMedia(b))
         {
             printf("Failed to load media!\n");
         }
@@ -214,6 +290,7 @@ int main()
                 SDL_RenderClear(gRenderer);
                 SDL_RenderCopy(gRenderer, gTextureGround, NULL, &dstrect1);
                 SDL_Rect dstrect2;
+                SDL_Rect dstrect3;
                 dstrect2.w = 50;
                 dstrect2.h = 50;
                 for (int i = 0; i < 5; i++)
@@ -222,6 +299,13 @@ int main()
                     dstrect2.y = a[i].y;
                     SDL_RenderCopy(gRenderer, a[i].gTextureball, NULL, &dstrect2);
                 }
+                  for (int i = 0; i < 5; i++)
+                {
+                    dstrect3.x = b[i].x;
+                    dstrect3.y = b[i].y;
+                    SDL_RenderCopy(gRenderer, b[i].gTextureball1, NULL, &dstrect3);
+                }
+                SDL_RenderCopy(gRenderer, b[0].gTextureball1, NULL, &dstrect3);
                 SDL_RenderCopy(gRenderer, a[0].gTextureball, NULL, &dstrect2);
                 SDL_RenderPresent(gRenderer);
                 while (SDL_PollEvent(&e) != 0)
@@ -314,5 +398,6 @@ int main()
         }
     }
     close(a);
+    close(b);
     return 0;
 }
