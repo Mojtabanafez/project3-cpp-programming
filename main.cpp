@@ -15,49 +15,9 @@ class gTexture1
     SDL_Texture *gTextureball;
     double x;
     double y;
-    double a = -3;
+    double a;
     double ax;
     double ay;
-    double v;
-    double vy;
-    double vx;
-    double m;
-    void intialize()
-    {
-    }
-    void move()
-    {
-    }
-};
-class gTexture2
-{
-  public:
-    SDL_Texture *gTextureball;
-    double x;
-    double y;
-    double a = -3;
-    double ax;
-    double ay;
-    double v;
-    double vy;
-    double vx;
-    double m;
-    void intialize()
-    {
-    }
-    void move()
-    {
-    }
-};
-class gTexture3
-{
-  public:
-    SDL_Texture *gTextureball;
-    double x;
-    double y;
-    double a = -2;
-    double ay;
-    double ax;
     double v;
     double vy;
     double vx;
@@ -77,9 +37,6 @@ SDL_Renderer *gRenderer = NULL;
 bool init();
 bool loadMedia();
 void close();
-void handleEvent(SDL_Event *e, gTexture1 a[5])
-{
-}
 bool init()
 {
     bool success = true;
@@ -122,7 +79,7 @@ bool init()
     }
     return success;
 }
-bool loadMedia(gTexture1 a[5], gTexture2 iran[5], gTexture3 ball[1])
+bool loadMedia(gTexture1 a[5], gTexture1 iran[5], gTexture1 ball[1])
 {
     bool success = true;
     for (int i = 0; i < 5; i++)
@@ -164,7 +121,7 @@ bool loadMedia(gTexture1 a[5], gTexture2 iran[5], gTexture3 ball[1])
 
     return success;
 }
-void close(gTexture1 a[5], gTexture2 iran[5], gTexture3 ball[1])
+void close(gTexture1 a[5], gTexture1 iran[5], gTexture1 ball[1])
 {
     for (int i = 0; i < 5; i++)
     {
@@ -212,7 +169,7 @@ SDL_Texture *loadTexture(std::string path)
     }
     return newTexture;
 }
-void InitialPositiom(gTexture1 a[5], gTexture2 iran[5], gTexture3 ball[1])
+void InitialPositiom(gTexture1 a[5], gTexture1 iran[5], gTexture1 ball[1])
 {
     ball[0].x = 390;
     ball[0].y = 275;
@@ -239,7 +196,7 @@ void InitialPositiom(gTexture1 a[5], gTexture2 iran[5], gTexture3 ball[1])
     iran[4].x = 550;
     iran[4].y = 375;
 }
-void showmap(gTexture1 a[5], gTexture2 iran[5], gTexture3 ball[1])
+void showmap(gTexture1 a[5], gTexture1 iran[5], gTexture1 ball[1])
 {
     SDL_Rect dstrect1;
     dstrect1.x = 0;
@@ -278,15 +235,15 @@ void drawcircleA(int i, double z, gTexture1 a[5])
     else if (z < 80)
     {
         circleRGBA(gRenderer, a[i].x + 25, a[i].y + 25, z, 255, 255, 255, 255);
-        a[i].v = z / 15;
+        a[i].v = z;
     }
     else
     {
         circleRGBA(gRenderer, a[i].x + 25, a[i].y + 25, 80, 255, 255, 255, 255);
-        a[i].v = 80.0 / 15.0;
+        a[i].v = 80.0 ;
     }
 }
-void drawcircleiran(int i, double z, gTexture2 iran[5])
+void drawcircleiran(int i, double z, gTexture1 iran[5])
 {
     if (z < 22)
     {
@@ -295,12 +252,12 @@ void drawcircleiran(int i, double z, gTexture2 iran[5])
     else if (z < 80)
     {
         circleRGBA(gRenderer, iran[i].x + 25, iran[i].y + 25, z, 255, 255, 255, 255);
-        iran[i].v = z / 15;
+        iran[i].v = z ;
     }
     else
     {
         circleRGBA(gRenderer, iran[i].x + 25, iran[i].y + 25, 80, 255, 255, 255, 255);
-        iran[i].v = 80.0 / 15.0;
+        iran[i].v = 80.0;
     }
 }
 double CosDetermineA(double m, gTexture1 a[5], int x, int y, int i)
@@ -321,7 +278,6 @@ double SinDetermineA(double m, gTexture1 a[5], int x, int y, int i)
     b = sqrt((m * m) / (m * m + 1));
     if (y > a[i].y + 25)
         b = -b;
-        cout<<"b="<<b;
     return b;
 }
 void drawlineA(gTexture1 a[5], double m, double z, int i, int x, int y)
@@ -338,14 +294,12 @@ void drawlineA(gTexture1 a[5], double m, double z, int i, int x, int y)
     double e = 0;
     for (double p = 25 * f, e = 25 * b; abs(p) < abs(o * f), abs(e) < abs(o * b);)
     {
-
-        cout << 3 << endl;
         SDL_RenderDrawPoint(gRenderer, a[i].x + p + 25, a[i].y + 25 + e);
         e += 2 * b;
         p += 2 * f;
     }
 }
-double SinDetermineIran(double m, gTexture2 iran[5], int x, int y, int i)
+double SinDetermineIran(double m, gTexture1 iran[5], int x, int y, int i)
 {
     double b;
     b = sqrt((m * m) / (m * m + 1));
@@ -353,7 +307,7 @@ double SinDetermineIran(double m, gTexture2 iran[5], int x, int y, int i)
         b = -b;
     return b;
 }
-double CosDetermineIran(double m, gTexture2 iran[5], int x, int y, int i)
+double CosDetermineIran(double m, gTexture1 iran[5], int x, int y, int i)
 {
     double f;
     f = sqrt(1 / (m * m + 1));
@@ -365,7 +319,7 @@ double CosDetermineIran(double m, gTexture2 iran[5], int x, int y, int i)
     return f;
 }
 
-void drawlineiran(gTexture2 iran[5], double m, double z, int i, int x, int y)
+void drawlineiran(gTexture1 iran[5], double m, double z, int i, int x, int y)
 {
     double o = z;
     double f, b;
@@ -378,42 +332,78 @@ void drawlineiran(gTexture2 iran[5], double m, double z, int i, int x, int y)
     double e = 0;
     for (double p = 25 * f, e = 25 * b; abs(p) < abs(o * f), abs(e) < abs(o * b);)
     {
-        cout << 3 << endl;
         SDL_RenderDrawPoint(gRenderer, iran[i].x + p + 25, iran[i].y + 25 + e);
         e += 2 * b;
         p += 2 * f;
     }
 }
-
-void MoveA( int i, double m, int x, int y,gTexture1 a[5], gTexture2 iran[5], gTexture3 ball[1])
+void checkWallStrike(int i, gTexture1 a[5], double *t, double *vx1, double *vy1)
 {
-    cout<<"m="<<m;
-    a[i].vy = ((a[i].v) * SinDetermineA(m, a, x, y, i))*(-1);
-    a[i].vx = ((a[i].v) * CosDetermineA(m, a, x, y, i))*(-1);
-    a[i].ay = ((a[i].a) * SinDetermineA(m, a, x, y, i))*(-1);
-    a[i].ax = ((a[i].a) * CosDetermineA(m, a, x, y, i))*(-1);
-    cout << a[i].vy <<"\t"<< a[i].vx <<"\t"<< a[i].ay<<"\t" << a[i].ax<<endl;
-    cout<<SinDetermineA(m, a, x, y, i)<<"\t"<<CosDetermineA(m, a, x, y, i)<<endl;
-    double vx1 = a[i].vx;
-    double vy1 = a[i].vy;
-    double x1 = a[i].x;
-    double y1 = a[i].y;
-    cout<<"x1="<<x1<<endl;
-    double t = 0;
-    while (a[i].vx != 0 || a[i].vy != 0)
+    for (int i = 0; i < 5; i++)
     {
-        cout<<"i="<<i<<endl;
-        a[i].x = ((0.5) * (a[i].ax) * t * t) + (vx1 * t) + x1;
-     //   cout << ".a[i].x=" << a[i].x << endl;
-        cout << ".a[i].y=" << a[i].y <<"t="<<t<<"a[i].ay="<<a[i].ay<<"vy1="<<vy1<< endl;
-        a[i].y = ((0.5) * (a[i].ay) * t * t) + (vy1 * t) + y1;
-        a[i].vx = (a[i].ax * t) + vx1;
-        a[i].vy = (a[i].ay * t) + vy1;
+        if (a[i].x < 92)
+        {
+            a[i].vx *= (-1);
+            *t = 0;
+            *vx1 = a[i].vx;
+        }
+        if (a[i].x > 708)
+        {
+            a[i].vx *= (-1);
+            *t = 0;
+            *vx1 = a[i].vx;
+        }
+        if (a[i].y < 105)
+        {
+            a[i].vy *= (-1);
+            *t = 0;
+            *vy1 = a[i].vy;
+        }
+        if (a[i].y > 465)
+        {
+            a[i].vy *= (-1);
+            *t = 0;
+            *vy1 = a[i].vy;
+        }
+    }
+}
 
-        showmap(a,iran,ball);
-        SDL_RenderPresent(gRenderer);
-        SDL_RenderClear(gRenderer);
-        t+=0.001;
+void MoveA(double m, int x, int y, gTexture1 a[5], gTexture1 iran[5], gTexture1 ball[1])
+{
+    for (int i = 0; i < 5; i++)
+    {
+        //  cout <<"m="<<m<<endl;
+        //   cout<<"m="<<m<<endl;
+        //   cout << "i" << i << endl;
+        a[i].vy = ((a[i].v) * SinDetermineA(m, a, x, y, i)) ;
+        a[i].vx = ((a[i].v) * CosDetermineA(m, a, x, y, i)) ;
+        a[i].ay = ((a[i].a) * SinDetermineA(m, a, x, y, i));
+        a[i].ax = ((a[i].a) * CosDetermineA(m, a, x, y, i));
+        cout << "a[i].vy=" << a[i].vy << "\ta[i].vx=" << a[i].vx /*<<"\t"<< a[i].ay<<"\t" << a[i].ax*/ << endl;
+        // cout << SinDetermineA(m, a, x, y, i) << "\t" << CosDetermineA(m, a, x, y, i) << endl;
+        double vx1 = a[i].vx;
+        double vy1 = a[i].vy;
+        double x1 = a[i].x;
+        double y1 = a[i].y;
+        //   cout<<"x1="<<x1<<endl;
+        double t = 0;
+        while ((abs(a[i].vx)) > 0.01 || abs(a[i].vy )>0.01)
+        {
+               checkWallStrike(i,a,&t,&vx1,&vy1);
+           // cout << "i=" << i << endl;
+            a[i].x = (((0.5) * (a[i].ax) * t * t) + (vx1 * t) + x1) ;
+            //   cout << ".a[i].x=" << a[i].x << endl;
+            //   cout << ".a[i].y=" << a[i].y <<"t="<<t<<"a[i].ay="<<a[i].ay<<"vy1="<<vy1<< endl;
+            a[i].y = (((0.5) * (a[i].ay) * t * t) + (vy1 * t) + y1) ;
+            a[i].vx = (a[i].ax * t) + vx1;
+            a[i].vy = (a[i].ay * t) + vy1;
+            showmap(a, iran, ball);
+            SDL_RenderPresent(gRenderer);
+            t += 0.001;
+            SDL_RenderClear(gRenderer);
+        }
+        a[i].v=0;
+        
     }
 }
 
@@ -423,12 +413,15 @@ int main()
     bool flag = false;
     bool flag2 = true;
     int turn = 2;
-    gTexture3 ball[1];
+    gTexture1 ball[1];
     gTexture1 a[5];
-    gTexture2 iran[5];
+    gTexture1 iran[5];
     ball[0].gTextureball = NULL;
+    ball[0].a = -4;
     for (int i = 0; i < 5; i++)
     {
+        a[i].a = -6;
+        iran[i].a = -6;
         a[i].gTextureball = NULL;
         iran[i].gTextureball = NULL;
     }
@@ -466,13 +459,11 @@ int main()
                     {
                         quit = true;
                     }
-                    
                     int x, y;
                     if (flag2)
                     {
                         int r = 0;
                         double z = 0;
-                        
                         if (e.type == SDL_MOUSEMOTION || e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP)
                         {
                             if (e.type == SDL_QUIT)
@@ -480,26 +471,28 @@ int main()
                                 quit = true;
                             }
                             {
-                                cout << 2 << endl;
                                 if (e.type == SDL_QUIT)
                                 {
                                     quit = true;
                                 }
-                                
                                 SDL_GetMouseState(&x, &y);
                                 {
-                                    cout << 123 << endl;
                                     for (int i = 0; i < 5; i++)
                                     {
                                         if (((x - a[i].x - 25) * (x - a[i].x - 25)) + ((y - a[i].y - 25) * (y - a[i].y - 25)) < 625)
                                         {
                                             r = i;
+                                            bool flag = false;
                                             if (e.type == SDL_MOUSEBUTTONDOWN)
                                             {
                                                 flag = true;
 
                                                 while (flag)
                                                 {
+                                                    for (int j = 0; j < 5; j++)
+                                                    {
+                                                        cout << "a[i].vx" << a[i].v << endl;
+                                                    }
                                                     showmap(a, iran, ball);
                                                     if (SDL_PollEvent(&q) != 0)
                                                     {
@@ -520,6 +513,7 @@ int main()
                                                     }
                                                     SDL_GetMouseState(&x, &y);
                                                     z = sqrt(((x - a[i].x - 25) * (x - a[i].x - 25)) + ((y - a[i].y - 25) * (y - a[i].y - 25)));
+                                                    cout << "hjgkfldsa;klfdg" << i << endl;
                                                     drawcircleA(i, z, a);
                                                     if (x - 25 != a[i].x)
                                                     {
@@ -538,7 +532,7 @@ int main()
                     }
                     else
                     {
-                        MoveA(r, m, x, y, a, iran, ball);
+                        MoveA( m, x, y, a, iran, ball);
                         double z = 0;
                         if (e.type == SDL_MOUSEMOTION || e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP)
                         {
@@ -552,7 +546,7 @@ int main()
                             {
                                 for (int i = 0; i < 5; i++)
                                 {
-                                    
+
                                     if (((x - iran[i].x - 25) * (x - iran[i].x - 25)) + ((y - iran[i].y - 25) * (y - iran[i].y - 25)) < 625)
                                     {
                                         r = i;
@@ -596,7 +590,6 @@ int main()
                             }
                         }
                     }
-
                     turn++;
                 }
             }
