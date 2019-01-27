@@ -15,8 +15,8 @@ class gTexture1
     SDL_Texture *gTextureball;
     double x;
     double y;
-    int a;
-    int v;
+    double a = -3;
+    double v;
     int m;
     void intialize()
     {
@@ -31,7 +31,7 @@ class gTexture2
     SDL_Texture *gTextureball;
     double x;
     double y;
-    int a;
+    int a = 3;
     int v;
     int m;
     void intialize()
@@ -47,7 +47,7 @@ class gTexture3
     SDL_Texture *gTextureball;
     double x;
     double y;
-    int a;
+    int a = 2;
     int v;
     int m;
     void intialize()
@@ -271,6 +271,7 @@ void drawcircleA(int i, double z, gTexture1 a[5])
     else
     {
         circleRGBA(gRenderer, a[i].x + 25, a[i].y + 25, 80, 255, 255, 255, 255);
+        a[i].v = 80.0 / 15.0;
     }
 }
 void drawcircleiran(int i, double z, gTexture2 iran[5])
@@ -287,28 +288,44 @@ void drawcircleiran(int i, double z, gTexture2 iran[5])
     else
     {
         circleRGBA(gRenderer, iran[i].x + 25, iran[i].y + 25, 80, 255, 255, 255, 255);
+        iran[i].v = 80.0 / 15.0;
     }
 }
-void drawlineA(gTexture1 a[5], double m, double z, int i, int x, int y)
+double CosDetermineA(double m, gTexture1 a[5], int x, int y, int i)
 {
-    double o = z;
-    double f, b;
+    double f;
     f = sqrt(1 / (m * m + 1));
-    b = sqrt((m * m) / (m * m + 1));
+    if (x == a[i].x + 25)
+    {
+        f = 0;
+    }
     if (x == a[i].x + 25)
     {
         f = 0;
     }
     if (x > a[i].x + 25)
         f = -f;
+    return f;
+}
+double SinDetermineA(double m, gTexture1 a[5], int x, int y, int i)
+{
+    double b;
+    b = sqrt((m * m) / (m * m + 1));
     if (y > a[i].y + 25)
         b = -b;
+    return b;
+}
+void drawlineA(gTexture1 a[5], double m, double z, int i, int x, int y)
+{
+    double b, f;
+    b = SinDetermineA(m, a, x, y, i);
+    f = CosDetermineA(m, a, x, y, i);
+    double o = z;
+
     if (z > 80)
     {
         o = 80;
     }
-    cout << "f=" << f << endl;
-    cout << "b=" << b << endl;
     double e = 0;
     for (double p = 25 * f, e = 25 * b; abs(p) < abs(o * f), abs(e) < abs(o * b);)
     {
@@ -319,18 +336,32 @@ void drawlineA(gTexture1 a[5], double m, double z, int i, int x, int y)
         p += 2 * f;
     }
 }
-void drawlineiran(gTexture2 iran[5], double m, double z, int i, int x, int y)
+double SinDetermineIran(double m, gTexture2 iran[5], int x, int y, int i)
 {
-    double o = z;
-    double f, b;
-    f = sqrt(1 / (m * m + 1));
+    double b;
     b = sqrt((m * m) / (m * m + 1));
+    if (y > iran[i].y + 25)
+        b = -b;
+    return b;
+}
+double CosDetermineIran(double m, gTexture2 iran[5], int x, int y, int i)
+{
+    double f;
+    f = sqrt(1 / (m * m + 1));
+
     if (x == iran[i].x + 25)
         f = 0;
     if (x > iran[i].x + 25)
         f = -f;
-    if (y > iran[i].y+25)
-        b = -b;
+    return f;
+}
+
+void drawlineiran(gTexture2 iran[5], double m, double z, int i, int x, int y)
+{
+    double o = z;
+    double f, b;
+    b = SinDetermineIran(m, iran, x, y, i);
+    f = CosDetermineIran(m, iran, x, y, i);
     if (z > 80)
     {
         o = 80;
@@ -344,8 +375,19 @@ void drawlineiran(gTexture2 iran[5], double m, double z, int i, int x, int y)
         p += 2 * f;
     }
 }
+void MoveA(gTexture2 a[5], int i)
+{
+    int v1 == a[i].v;
+    while (a[i].v != 0)
+    {
+        a[i].x=
+        iran[i].x =
+    }
+}
+
 int main()
 {
+    int r = 0;
     bool flag = false;
     bool flag2 = true;
     int turn = 2;
@@ -358,6 +400,12 @@ int main()
         a[i].gTextureball = NULL;
         iran[i].gTextureball = NULL;
     }
+    for (int i = 0; i < 5; i++)
+    {
+        a[i].v = 0;
+        iran[i].v = 0;
+    }
+    ball[0].v = 0;
     InitialPositiom(a, iran, ball);
     SDL_Init(SDL_INIT_VIDEO);
     if (!init())
@@ -377,8 +425,8 @@ int main()
             SDL_Event q;
             while (!quit)
             {
-                    showmap(a, iran, ball);
-                    SDL_RenderPresent(gRenderer);
+                showmap(a, iran, ball);
+                SDL_RenderPresent(gRenderer);
                 if (SDL_PollEvent(&e) != 0)
                 {
                     if (e.type == SDL_QUIT)
@@ -408,18 +456,15 @@ int main()
                                     cout << 123 << endl;
                                     for (int i = 0; i < 5; i++)
                                     {
-                                        cout << 9 << endl;
                                         if (((x - a[i].x - 25) * (x - a[i].x - 25)) + ((y - a[i].y - 25) * (y - a[i].y - 25)) < 625)
                                         {
-
-                                            cout << 5 << endl;
+                                            r = i;
                                             if (e.type == SDL_MOUSEBUTTONDOWN)
                                             {
                                                 flag = true;
 
                                                 while (flag)
                                                 {
-                                                    cout << 3 << endl;
                                                     showmap(a, iran, ball);
                                                     if (SDL_PollEvent(&q) != 0)
                                                     {
@@ -458,8 +503,7 @@ int main()
                     }
                     else
                     {
-                        cout << 0 << endl;
-                        //   int r = 0;
+                        moveA(a, i);
                         double z = 0;
                         double m = 0;
                         if (e.type == SDL_MOUSEMOTION || e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP)
@@ -475,6 +519,7 @@ int main()
                                 {
                                     if (((x - iran[i].x - 25) * (x - iran[i].x - 25)) + ((y - iran[i].y - 25) * (y - iran[i].y - 25)) < 625)
                                     {
+                                        r = i;
                                         bool flag = false;
                                         if (e.type == SDL_MOUSEBUTTONDOWN)
                                         {
@@ -515,6 +560,7 @@ int main()
                             }
                         }
                     }
+
                     turn++;
                 }
             }
