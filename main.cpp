@@ -417,50 +417,78 @@ double m(double x1, double x2, double y1, double y2)
 }
 void barkhord(gTexture1 iran[5], gTexture1 a[5], gTexture1 ball[1], double *t, double *vx1, double *vy1, int i, double *x1, double *y1)
 {
-  //  for (int p = 0; p < 5; p++)
- int p=i;
+    //  for (int p = 0; p < 5; p++)
+    int p = i;
     {
         //   for (int k = 0; k < 5; k++)
         {
             if (a[p].x < 67)
             {
                 a[p].vx *= (-1);
-            //    if(a[p].vx<0)
-                a[p].ay *= (-1);
-              //  a[p].ax *= (-1);
+                //    if(a[p].vx<0)
+                //  a[p].ay *= (-1);
                 *vx1 = a[p].vx;
                 *x1 = a[p].x;
+                *vy1 = a[p].vy;
                 *y1 = a[p].y;
                 *t = 0;
             }
             if (a[p].x > 683)
             {
                 a[p].vx *= (-1);
-            //    if (a[p].vx < 0)
-                    a[p].ax *= (-1);
+                //    if (a[p].vx < 0)
                 //      a[p].ax *= (-1);
                 *vx1 = a[p].vx;
+                *vy1=a[p].vy;
                 *x1 = a[p].x;
                 *y1 = a[p].y;
                 *t = 0;
             }
             if (a[p].y > 440)
             {
+                
                 a[p].vy *= (-1);
-                a[p].ay *= (-1);
                 *vy1 = a[p].vy;
+                *vx1=a[p].vx;
                 *x1 = a[p].x;
                 *y1 = a[p].y;
                 *t = 0;
+                cout << "a[i].vx=" << a[i].vx << "a[i].vy=" << a[i].vy << endl;
             }
             if (a[p].y < 80)
             {
                 a[p].vy *= (-1);
-                a[p].ay *= (-1);
                 *vy1 = a[p].vy;
+                *vx1 = a[p].vx;
                 *x1 = a[p].x;
                 *y1 = a[p].y;
                 *t = 0;
+            }
+
+            if (a[p].vx > 0)
+            {
+                a[p].ax = -(abs(a[p].ax));
+            }
+            else if (a[p].vx == 0)
+            {
+                a[p].ax = 0;
+            }
+            else
+            {
+                a[p].ax = (abs(a[p].ax));
+            }
+            
+            if (a[p].vy > 0)
+            {
+                a[p].ay = -(abs(a[p].ay));
+            }
+            else if (a[p].vy == 0)
+            {
+                a[p].ay = 0;
+            }
+            else
+            {
+                a[p].ay = (abs(a[p].ay));
             }
             /*      if (iran[p].x < 67)
             {
@@ -570,22 +598,28 @@ void MoveA(double m, int x, int y, gTexture1 a[5], gTexture1 iran[5], gTexture1 
         double y1 = a[i].y;
         //   cout<<"x1="<<x1<<endl;
         double t = 0;
-        while ((abs(a[i].vx)) > 0.01 || abs(a[i].vy) > 0.01)
+        while ((abs(a[i].vx)) > 0.5 || abs(a[i].vy) > 0.5)
+        //   while (((a[i].vx * a[i].vx) + (a[i].vy * a[i].vy)) >= 0. - 1)
         {
-        //    cout<<"dsfhjkgsa";
-          cout<<"a[i].x="<<a[i].ax<<"a[i].y="<<a[i].ay<<endl  ;
-         //   cout << "i=" << i << endl;
+           // cout << "a[i].ax=" << a[i].ax << "a[i].ay=" << a[i].ay << endl;
+            cout << "a[i].vx=" << a[i].vx <<endl;
+            //   cout << "i=" << i << endl;
             a[i].x = (((0.5) * (a[i].ax) * t * t) + (vx1 * t) + x1);
             //   cout << ".a[i].x=" << a[i].x << endl;
             //   cout << ".a[i].y=" << a[i].y <<"t="<<t<<"a[i].ay="<<a[i].ay<<"vy1="<<vy1<< endl;
             a[i].y = (((0.5) * (a[i].ay) * t * t) + (vy1 * t) + y1);
+             cout << "a[i].vx=" << a[i].vx << endl;
             a[i].vx = (a[i].ax * t) + vx1;
             a[i].vy = (a[i].ay * t) + vy1;
+            cout << "a[i].vx=" << a[i].vx << endl;
             showmap(a, iran, ball);
             SDL_RenderPresent(gRenderer);
             barkhord(iran, a, ball, &t, &vx1, &vy1, i, &x1, &y1);
             t += 0.001;
-            
+            if (abs(a[i].vx) < 0.5)
+                break;
+            if (abs(a[i].vy) < 0.5)
+                break;
             SDL_RenderClear(gRenderer);
         }
         a[i].v = 0;
