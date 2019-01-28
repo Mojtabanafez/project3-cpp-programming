@@ -326,6 +326,7 @@ void drawlineiran(gTexture1 iran[5], double m, double z, int i, int x, int y)
     b = SinDetermineIran(m, iran, x, y, i);
     f = CosDetermineIran(m, iran, x, y, i);
     if (z > 80)
+
     {
         o = 80;
     }
@@ -406,7 +407,7 @@ double CosIran(double m, gTexture1 iran[5], int x, int y, int i)
         f = -f;
     return f;
 }
-double m(double x1, double x2, double y1, double y2)
+double m9(double x1, double x2, double y1, double y2)
 {
     double m;
     if (x1 != x2)
@@ -419,7 +420,7 @@ void barkhord(gTexture1 iran[5], gTexture1 a[5], gTexture1 ball[1], double *t, d
 {
     for (int p = 0; p < 5; p++)
     {
-        //   for (int k = 0; k < 5; k++)
+        for (int k = 0; k < 5; k++)
         {
             if (a[p].x < 67)
             {
@@ -551,27 +552,42 @@ void barkhord(gTexture1 iran[5], gTexture1 a[5], gTexture1 ball[1], double *t, d
             {
                 iran[p].ay = (abs(iran[p].ay));
             }
-        } /*
             if ((a[p].x - a[k].x) * (a[p].x - a[k].x) + (a[p].y - a[k].y) * (a[p].y - a[k].y) < 2500)
             {
-                int m1;
-                m1 = m(a[p].x, a[k].x, a[p].y, a[k].y);
+                double m1;
+                double u;
+                double t;
                 if (p != k)
                 {
+                    m1 = m9(a[p].x, a[k].x, a[p].y, a[k].y);
+
                     if (a[p].v == 0)
                     {
-                        a[p].v = abs(a[k].v * CosA(m1, a, a[k].x, a[k].y, p));
-                        a[k].v = abs(a[k].v * SinA(m1, a, a[k].x, a[k].y, p));
-                        a[k].vx = a[p].v * (-1) * SinA(m1, a, a[k].x, a[k].y, p);
-                        a[k].vy = a[p].v * CosA(m1, a, a[k].x, a[k].y, p);
+                        u = (a[p].y - a[k].y) / 50.0;
+                        t = (a[p].x - a[k].x) / 50.0;
+                        cout << "k" << endl;
+                        a[p].v = a[k].v * t;
+                        a[k].v = a[k].v * u;
+                        a[k].vx = a[k].v * u;
+                        a[k].vy = a[k].v * t;
+                        a[p].vx = a[p].v * t;
+                        a[p].vy = a[p].v * u;
                     }
                     if (a[k].v == 0)
                     {
-                        a[k].v = abs(a[p].v * CosA(m1, a, a[p].x, a[p].y, k));
-                        a[p].v = abs(a[p].v * SinA(m1, a, a[p].x, a[p].y, k));
+                        cout << "m1" << m1;
+                        cout << "n" << endl;
+                        a[k].v = a[p].v * t;
+                        a[p].v = a[p].v * u;
+                        a[p].vx = a[p].v * u;
+                        a[p].vy = a[p].v * t;
+                        a[k].vx = a[k].v * t;
+                        a[k].vy = a[k].v * u;
+                        cout << "a[k].vx=" << a[k].vx << endl;
+                        cout << "a[k].vy=" << a[k].vy << endl;
                     }
                 }
-            }
+            } /*
             if ((a[p].x - iran[k].x) * (a[p].x - iran[k].x) + (a[p].y - iran[k].y) * (a[p].y - iran[k].y) < 2500)
             {
                 int m2;
@@ -613,7 +629,9 @@ void barkhord(gTexture1 iran[5], gTexture1 a[5], gTexture1 ball[1], double *t, d
                         a[p].v = abs(a[p].v * SinIran(m5, iran, a[p].x, a[p].y, k));
                     }
                 }
-        }*/
+            }
+            }*/
+        }
     }
 }
 
@@ -628,7 +646,8 @@ void MoveA(double m, int x, int y, gTexture1 a[5], gTexture1 iran[5], gTexture1 
         a[i].vx = ((a[i].v) * CosDetermineA(m, a, x, y, i));
         a[i].ay = ((a[i].a) * SinDetermineA(m, a, x, y, i));
         a[i].ax = ((a[i].a) * CosDetermineA(m, a, x, y, i));
-        cout << "a[i].vy=" << a[i].vy << "\ta[i].vx=" << a[i].vx /*<<"\t"<< a[i].ay<<"\t" << a[i].ax*/ << endl;
+        cout << "a[i].vy=" << a[i].vy << "\ta[i].vx=" << a[i].vx /*<<"\t"<< a[i].ay<<"\t" << a[i].ax*/
+             << endl;
         // cout << SinDetermineA(m, a, x, y, i) << "\t" << CosDetermineA(m, a, x, y, i) << endl;
         double vx1 = a[i].vx;
         double vy1 = a[i].vy;
@@ -861,7 +880,7 @@ int main()
                             }
 
                             int x, y;
-                                SDL_GetMouseState(&x, &y);
+                            SDL_GetMouseState(&x, &y);
                             {
                                 for (int i = 0; i < 5; i++)
                                 {
