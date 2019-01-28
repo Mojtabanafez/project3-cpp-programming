@@ -310,7 +310,7 @@ double SinDetermineIran(double m, gTexture1 iran[5], int x, int y, int i)
 double CosDetermineIran(double m, gTexture1 iran[5], int x, int y, int i)
 {
     double f;
-    f = sqrt(1 / (m * m + 1));
+    f = sqrt(1.0 / (m * m + 1));
 
     if (x == iran[i].x + 25)
         f = 0;
@@ -418,7 +418,6 @@ double m(double x1, double x2, double y1, double y2)
 void barkhord(gTexture1 iran[5], gTexture1 a[5], gTexture1 ball[1], double *t, double *vx1, double *vy1, int i, double *x1, double *y1)
 {
     for (int p = 0; p < 5; p++)
-    // int p = i;
     {
         //   for (int k = 0; k < 5; k++)
         {
@@ -668,14 +667,21 @@ void MoveIran(double m, int x, int y, gTexture1 a[5], gTexture1 iran[5], gTextur
 {
     for (int i = 0; i < 5; i++)
     {
+
+        //  m = (double(y) - iran[i].y - 25.0) / (double(x) - iran[i].x - 25.0);
         //  cout <<"m="<<m<<endl;
         //   cout<<"m="<<m<<endl;
         //   cout << "i" << i << endl;
 
-        iran[i].vy = ((iran[i].v) * SinDetermineIran(m, a, x, y, i));
-        iran[i].vx = ((iran[i].v) * CosDetermineIran(m, a, x, y, i));
-        iran[i].ay = ((iran[i].a) * SinDetermineIran(m, a, x, y, i));
-        iran[i].ax = ((iran[i].a) * CosDetermineIran(m, a, x, y, i));
+        cout << "i=" << i << "\t"
+             << "mmmmmmmmmmmmmmm=" << m << endl;
+        cout << "x=" << x << "y=" << y << endl;
+        cout << "Cosdetermin" << CosDetermineIran(m, iran, x, y, i) << endl;
+        cout << "sinjkfdks" << SinDetermineIran(m, iran, x, y, i) << endl;
+        iran[i].vy = ((iran[i].v) * SinDetermineIran(m, iran, x, y, i));
+        iran[i].vx = ((iran[i].v) * CosDetermineIran(m, iran, x, y, i));
+        iran[i].ay = ((iran[i].a) * SinDetermineIran(m, iran, x, y, i));
+        iran[i].ax = ((iran[i].a) * CosDetermineIran(m, iran, x, y, i));
         // cout << "a[i].vy=" << a[i].vy << "\ta[i].vx=" << a[i].vx /*<<"\t"<< a[i].ay<<"\t" << a[i].ax*/ << endl;
         // cout << SinDetermineA(m, a, x, y, i) << "\t" << CosDetermineA(m, a, x, y, i) << endl;
         double vx1 = iran[i].vx;
@@ -687,10 +693,10 @@ void MoveIran(double m, int x, int y, gTexture1 a[5], gTexture1 iran[5], gTextur
         while ((abs(iran[i].vx)) > 0.5 || abs(iran[i].vy) > 0.5)
         //   while (((a[i].vx * a[i].vx) + (a[i].vy * a[i].vy)) >= 0. - 1)
         {
-            cout << "sin=" << SinDetermineIran(m, a, x, y, i) << endl;
-            cout << "cos=" << CosDetermineIran(m, a, x, y, i) << endl;
+            //     cout << "sin=" << SinDetermineIran(m, a, x, y, i) << endl;
+            //    cout << "cos=" << CosDetermineIran(m, a, x, y, i) << endl;
             // cout << "a[i].ax=" << a[i].ax << "a[i].ay=" << a[i].ay << endl;
-            cout << "a[i].vx=" << iran[i].vx << endl;
+            //        cout << "a[i].vx=" << iran[i].vx << endl;
             //   cout << "i=" << i << endl;
             iran[i].x = (((0.5) * (iran[i].ax) * t * t) + (vx1 * t) + x1);
             //   cout << ".a[i].x=" << a[i].x << endl;
@@ -717,6 +723,7 @@ void MoveIran(double m, int x, int y, gTexture1 a[5], gTexture1 iran[5], gTextur
 int main()
 {
     int r = 0;
+    int x, y;
     bool flag = false;
     bool flag2 = true;
     int turn = 2;
@@ -758,18 +765,23 @@ int main()
             double m = 0;
             while (!quit)
             {
+                SDL_GetMouseState(&x, &y);
+                cout << "x=" << x << "y=" << y << endl;
                 showmap(a, iran, ball);
+
                 SDL_RenderPresent(gRenderer);
+
                 if (SDL_PollEvent(&e) != 0)
                 {
                     if (e.type == SDL_QUIT)
                     {
                         quit = true;
                     }
-                    int x, y;
+
                     if (flag2)
                     {
-                        MoveIran(m, x, y, a, iran, ball);
+
+                        MoveIran((m), x, y, a, iran, ball);
                         int r = 0;
                         double z = 0;
                         if (e.type == SDL_MOUSEMOTION || e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP)
@@ -821,7 +833,6 @@ int main()
                                                     }
                                                     SDL_GetMouseState(&x, &y);
                                                     z = sqrt(((x - a[i].x - 25) * (x - a[i].x - 25)) + ((y - a[i].y - 25) * (y - a[i].y - 25)));
-                                                    cout << "hjgkfldsa;klfdg" << i << endl;
                                                     drawcircleA(i, z, a);
                                                     if (x - 25 != a[i].x)
                                                     {
@@ -840,7 +851,7 @@ int main()
                     }
                     else
                     {
-                        MoveA(m, x, y, a, iran, ball);
+                        MoveA((m), x, y, a, iran, ball);
                         double z = 0;
                         if (e.type == SDL_MOUSEMOTION || e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP)
                         {
@@ -850,7 +861,7 @@ int main()
                             }
 
                             int x, y;
-                            SDL_GetMouseState(&x, &y);
+                                SDL_GetMouseState(&x, &y);
                             {
                                 for (int i = 0; i < 5; i++)
                                 {
@@ -883,14 +894,28 @@ int main()
                                                 }
                                                 SDL_GetMouseState(&x, &y);
                                                 z = sqrt(((x - iran[i].x - 25) * (x - iran[i].x - 25)) + ((y - iran[i].y - 25) * (y - iran[i].y - 25)));
+
                                                 drawcircleiran(i, z, iran);
                                                 if (x - 25 != iran[i].x)
                                                 {
                                                     m = (double(y) - iran[i].y - 25.0) / (double(x) - iran[i].x - 25.0);
+                                                    //                                          m *= (-1);
+                                                }
+
+                                                if (flag == false)
+                                                {
+                                                    cout << "a[i].x=" << a[i].x << "a[i].y=" << a[i].y << endl;
+                                                    cout << "x=" << x << "y=" << y << endl;
+                                                    cout << "mmmmmmmmmmmmmmm22222222222=" << m << endl;
+                                                    cout << "i=" << i << endl;
+                                                    cout << "mainCosdetermin" << CosDetermineIran(m, iran, x, y, i) << endl;
+                                                    cout << "mainsinjkfdks" << SinDetermineIran(m, iran, x, y, i) << endl;
                                                 }
                                                 drawlineiran(iran, m, z, i, x, y);
                                                 SDL_RenderPresent(gRenderer);
                                                 SDL_RenderClear(gRenderer);
+
+                                                cout << "a[i].x=" << a[i].x << "a[i].y=" << a[i].y << endl;
                                             }
                                         }
                                     }
@@ -898,7 +923,7 @@ int main()
                             }
                         }
                     }
-                    turn++;
+                    //      turn++;
                 }
             }
         }
