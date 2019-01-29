@@ -21,7 +21,13 @@ class gTexture1
     double v;
     double vy;
     double vx;
+    double vx1;
+    double vy1;
+    double x1;
+    double y1;
     double m;
+
+    double t;
     void intialize()
     {
     }
@@ -416,7 +422,7 @@ double m9(double x1, double x2, double y1, double y2)
     }
     return m;
 }
-void barkhord(gTexture1 iran[5], gTexture1 a[5], gTexture1 ball[1], double *t, double *vx1, double *vy1, int i, double *x1, double *y1)
+void barkhord(gTexture1 iran[5], gTexture1 a[5], gTexture1 ball[1], int i)
 {
     for (int p = 0; p < 5; p++)
     {
@@ -427,130 +433,79 @@ void barkhord(gTexture1 iran[5], gTexture1 a[5], gTexture1 ball[1], double *t, d
                 a[p].vx *= (-1);
                 //    if(a[p].vx<0)
                 //  a[p].ay *= (-1);
-                *vx1 = a[p].vx;
-                *x1 = a[p].x;
-                *vy1 = a[p].vy;
-                *y1 = a[p].y;
-                *t = 0;
+                a[p].vx1 = a[p].vx;
+                a[p].x1 = a[p].x;
+                a[p].vy1 = a[p].vy;
+                a[p].y1 = a[p].y;
+                a[p].t = 0;
             }
             if (a[p].x > 683)
             {
                 a[p].vx *= (-1);
                 //    if (a[p].vx < 0)
                 //      a[p].ax *= (-1);
-                *vx1 = a[p].vx;
-                *vy1 = a[p].vy;
-                *x1 = a[p].x;
-                *y1 = a[p].y;
-                *t = 0;
+                a[p].vx1 = a[p].vx;
+                a[p].vy1 = a[p].vy;
+                a[p].x1 = a[p].x;
+                a[p].y1 = a[p].y;
+                a[p].t = 0;
             }
             if (a[p].y > 440)
             {
 
                 a[p].vy *= (-1);
-                *vy1 = a[p].vy;
-                *vx1 = a[p].vx;
-                *x1 = a[p].x;
-                *y1 = a[p].y;
-                *t = 0;
-                cout << "a[i].vx=" << a[i].vx << "a[i].vy=" << a[i].vy << endl;
+                a[p].vy1 = a[p].vy;
+                a[p].vx1 = a[p].vx;
+                a[p].x1 = a[p].x;
+                a[p].y1 = a[p].y;
+                a[p].t = 0;
+                //    cout << "a[i].vx=" << a[i].vx << "a[i].vy=" << a[i].vy << endl;
             }
             if (a[p].y < 80)
             {
                 a[p].vy *= (-1);
-                *vy1 = a[p].vy;
-                *vx1 = a[p].vx;
-                *x1 = a[p].x;
-                *y1 = a[p].y;
-                *t = 0;
+                a[p].vy1 = a[p].vy;
+                a[p].vx1 = a[p].vx;
+                a[p].x1 = a[p].x;
+                a[p].y1 = a[p].y;
+                a[p].t = 0;
             }
 
-            if (a[p].vx > 0)
-            {
-                a[p].ax = -(abs(a[p].ax));
-            }
-            else if (a[p].vx == 0)
-            {
-                a[p].ax = 0;
-            }
-            else
-            {
-                a[p].ax = (abs(a[p].ax));
-            }
-
-            if (a[p].vy > 0)
-            {
-                a[p].ay = -(abs(a[p].ay));
-            }
-            else if (a[p].vy == 0)
-            {
-                a[p].ay = 0;
-            }
-            else
-            {
-                a[p].ay = (abs(a[p].ay));
-            }
             if (iran[p].x < 67)
             {
                 iran[p].vx *= (-1);
-                *vx1 = iran[p].vx;
-                *x1 = iran[p].x;
-                *vy1 = iran[p].vy;
-                *y1 = iran[p].y;
-                *t = 0;
+                iran[p].vx1 = iran[p].vx;
+                iran[p].x1 = iran[p].x;
+                iran[p].vy1 = iran[p].vy;
+                iran[p].y1 = iran[p].y;
+                iran[p].t = 0;
             }
             if (iran[p].x > 683)
             {
                 iran[p].vx *= (-1);
-                *vx1 = iran[p].vx;
-                *vy1 = iran[p].vy;
-                *x1 = iran[p].x;
-                *y1 = iran[p].y;
-                *t = 0;
+                iran[p].vx1 = iran[p].vx;
+                iran[p].vy1 = iran[p].vy;
+                iran[p].x1 = iran[p].x;
+                iran[p].y1 = iran[p].y;
+                iran[p].t = 0;
             }
             if (iran[p].y > 440)
             {
                 iran[p].vy *= (-1);
-                *vy1 = iran[p].vy;
-                *vx1 = iran[p].vx;
-                *x1 = iran[p].x;
-                *y1 = iran[p].y;
-                *t = 0;
+                iran[p].vy1 = iran[p].vy;
+                iran[p].vx1 = iran[p].vx;
+                iran[p].x1 = iran[p].x;
+                iran[p].y1 = iran[p].y;
+                iran[p].t = 0;
             }
             if (iran[p].y < 80)
             {
                 iran[p].vy *= (-1);
-                *vy1 = iran[p].vy;
-                *vx1 = iran[p].vx;
-                *x1 = iran[p].x;
-                *y1 = iran[p].y;
-                *t = 0;
-            }
-
-            if (iran[p].vx > 0)
-            {
-                iran[p].ax = -(abs(iran[p].ax));
-            }
-            else if (iran[p].vx == 0)
-            {
-                iran[p].ax = 0;
-            }
-            else
-            {
-                iran[p].ax = (abs(iran[p].ax));
-            }
-
-            if (iran[p].vy > 0)
-            {
-                iran[p].ay = -(abs(iran[p].ay));
-            }
-            else if (iran[p].vy == 0)
-            {
-                iran[p].ay = 0;
-            }
-            else
-            {
-                iran[p].ay = (abs(iran[p].ay));
+                iran[p].vy1 = iran[p].vy;
+                iran[p].vx1 = iran[p].vx;
+                iran[p].x1 = iran[p].x;
+                iran[p].y1 = iran[p].y;
+                iran[p].t = 0;
             }
             double u;
             double t;
@@ -560,33 +515,225 @@ void barkhord(gTexture1 iran[5], gTexture1 a[5], gTexture1 ball[1], double *t, d
                 {
                     if (a[p].v == 0)
                     {
-                        u = (a[p].y - a[k].y) / 50.0;
-                        t = (a[p].x - a[k].x) / 50.0;
-                        //cout << "k" << endl;
-                        a[p].v = a[k].v * t;
-                        a[k].v = a[k].v * u;
-                        a[k].vx = a[k].v * u;
-                        a[k].vy = a[k].v * t;
-                        a[p].vx = a[p].v * t;
-                        a[p].vy = a[p].v * u;
+                        if (a[k].vx > 0)
+                        {
+                            if (a[k].x < a[p].x)
+                            {
+                                u = (a[p].y - a[k].y) / 50.0;
+                                t = (a[p].x - a[k].x) / 50.0;
+                                //cout << "k" << endl;
+                                a[k].v = abs(a[k].vx) * u;
+                                a[k].vx = a[k].v * u;
+                                a[k].vy = (-1) * a[k].v * t;
+                                a[k].x1 = a[k].x;
+                                a[k].t = 0;
+                                a[k].y1 = a[k].y;
+                                a[k].vx1 = a[k].vx;
+                                a[k].vy1 = a[k].vy;
+
+                                a[p].v = abs(a[k].vx) * t;
+                                a[p].vx = a[p].v * t;
+                                a[p].vy = a[p].v * u;
+                                a[p].x1 = a[p].x;
+                                a[p].t = 0;
+                                a[p].y1 = a[p].y;
+                                a[p].vx1 = a[p].vx;
+                                a[p].vy1 = a[p].vy;
+                            }
+                        }
+                        else if (a[k].vx < 0)
+                        {
+                            if (a[k].x > a[p].x)
+                            {
+                                u = (a[p].y - a[k].y) / 50.0;
+                                t = (a[p].x - a[k].x) / 50.0;
+                                //cout << "k" << endl;
+                                a[k].v = abs(a[k].vx) * u;
+                                a[k].vx = a[k].v * u;
+                                a[k].vy = (-1) * a[k].v * t;
+                                a[k].x1 = a[k].x;
+                                a[k].t = 0;
+                                a[k].y1 = a[k].y;
+                                a[k].vx1 = a[k].vx;
+                                a[k].vy1 = a[k].vy;
+
+                                a[p].v = abs(a[k].vx) * t;
+                                a[p].vx = a[p].v * t;
+                                a[p].vy = a[p].v * u;
+                                a[p].x1 = a[p].x;
+                                a[p].t = 0;
+                                a[p].y1 = a[p].y;
+                                a[p].vx1 = a[p].vx;
+                                a[p].vy1 = a[p].vy;
+                            }
+                        }
+                        if (a[k].vy > 0)
+                        {
+                            if (a[k].y < a[p].y)
+                            {
+                                u = (a[p].x - a[k].x) / (50.0);
+                                t = (a[p].y - a[k].y) / (50.0);
+
+                                a[k].v = abs(a[k].vy) * (u);
+                                a[k].vx += (-1) * (a[k].v) * (t);
+                                a[k].vy += u * (a[k].v);
+                                a[k].x1 = a[k].x;
+                                a[k].t = 0;
+                                a[k].y1 = a[k].y;
+                                a[k].vx1 = a[k].vx;
+                                a[k].vy1 = +a[k].vy;
+
+                                a[p].v = abs(a[k].vy) * t;
+                                a[p].vx += a[p].v * t;
+                                a[p].vy += a[p].v * u;
+                                a[p].x1 = a[p].x;
+                                a[p].t = 0;
+                                a[p].y1 = a[p].y;
+                                a[p].vx1 = a[p].vx;
+                                a[p].vy1 = a[p].vy;
+                            }
+                        }
+                        else if (a[k].vy < 0)
+                        {
+                            if (a[k].y > a[p].y)
+                            {
+                                u = (a[p].x - a[k].x) / (50.0);
+                                t = (a[p].y - a[k].y) / (50.0);
+                                a[k].v = abs(a[k].vy) * (u);
+                                a[k].vx += (-1) * (a[k].v) * (t);
+                                a[k].vy += u * (a[k].v);
+                                a[k].x1 = a[k].x;
+                                a[k].t = 0;
+                                a[k].y1 = a[k].y;
+                                a[k].vx1 = a[k].vx;
+                                a[k].vy1 = a[k].vy;
+
+                                a[p].v = abs(a[k].vy) * t;
+                                a[p].vx += a[p].v * t;
+                                a[p].vy += a[p].v * u;
+                                a[p].x1 = a[p].x;
+                                a[p].t = 0;
+                                a[p].y1 = a[p].y;
+                                a[p].vx1 = a[p].vx;
+                                a[p].vy1 = a[p].vy;
+                            }
+                        }
                     }
+
                     if (a[k].v == 0)
                     {
-                        u= (a[p].y - a[k].y) / 50.0 * (-1);
-                        t = (a[p].x - a[k].x) / 50.0 *(-1);
-                       // cout << "m1" << m1;
-                       // cout << "n" << endl;
-                        a[k].v = a[p].v * t;
-                        a[p].v = a[p].v * u;
-                        a[p].vx = a[p].v * u;
-                        a[p].vy = a[p].v * t;
-                        a[k].vx = a[k].v * t;
-                        a[k].vy = a[k].v * u;
+                        if (a[p].vx > 0)
+                        {
+                            if (a[p].x < a[k].x)
+                            {
+                                u = (a[k].y - a[p].y) / 50.0;
+                                t = (a[k].x - a[p].x) / 50.0;
+                                // cout << "m1" << m1;
+                                // cout << "n" << endl;
+                                a[k].v = abs(a[p].vx) * t;
+                                a[k].vx = a[k].v * t;
+                                a[k].vy = a[k].v * u;
+                                a[k].x1 = a[k].x;
+                                a[k].t = 0;
+                                a[k].y1 = a[k].y;
+                                a[k].vx1 = a[k].vx;
+                                a[k].vy1 = a[k].vy;
+
+                                a[p].v = abs(a[p].vx) * u;
+                                a[p].vx = a[p].v * u;
+                                a[p].vy = (-1) * a[p].v * t;
+                                a[p].x1 = a[p].x;
+                                a[p].t = 0;
+                                a[p].y1 = a[p].y;
+                                a[p].vx1 = a[p].vx;
+                                a[p].vy1 = a[p].vy;
+                            }
+                        }
+                        else if (a[p].vx < 0)
+                        {
+                            if (a[p].x > a[k].x)
+                            {
+                                u = (a[k].y - a[p].y) / 50.0;
+                                t = (a[k].x - a[p].x) / 50.0;
+                                // cout << "m1" << m1;
+                                // cout << "n" << endl;
+                                a[k].v = abs(a[p].vx) * t;
+                                a[k].vx = a[k].v * t;
+                                a[k].vy = a[k].v * u;
+                                a[k].x1 = a[k].x;
+                                a[k].t = 0;
+                                a[k].y1 = a[k].y;
+                                a[k].vx1 = a[k].vx;
+                                a[k].vy1 = a[k].vy;
+
+                                a[p].v = abs(a[p].vx) * u;
+                                a[p].vx = a[p].v * u;
+                                a[p].vy = (-1) * a[p].v * t;
+                                a[p].x1 = a[p].x;
+                                a[p].t = 0;
+                                a[p].y1 = a[p].y;
+                                a[p].vx1 = a[p].vx;
+                                a[p].vy1 = a[p].vy;
+                            }
+                        }
+                        if (a[p].vy > 0)
+                        {
+                            if (a[p].y < a[k].y)
+                            {
+                                u = (a[k].x - a[p].x) / (50.0);
+                                t = (a[k].y - a[p].y) / (50.0);
+                                a[p].v = a[k].vy * u;
+                                a[p].vx += (-1) * a[p].v * u;
+                                a[p].vy += a[p].v * t;
+                                a[p].x1 = a[p].x;
+                                a[p].t = 0;
+                                a[p].y1 = a[p].y;
+                                a[p].vx1 = a[p].vx;
+                                a[p].vy1 = a[p].vy;
+
+                                a[k].v = a[p].vy * t;
+                                a[k].vx += a[k].v * t;
+                                a[k].vy += a[k].v * u;
+                                a[k].x1 = a[k].x;
+                                a[k].t = 0;
+                                a[k].y1 = a[k].y;
+                                a[k].vx1 = a[k].vx;
+                                a[k].vy1 = a[k].vy;
+                            }
+                        }
+                        else if (a[p].vy < 0)
+                        {
+                            if (a[p].y > a[k].y)
+                            {
+                                u = (a[k].x - a[p].x) / (50.0);
+                                t = (a[k].y - a[p].y) / (50.0);
+                                a[p].v = a[k].vy * u;
+                                a[p].vx += (-1) * a[p].v * u;
+                                a[p].vy += a[p].v * t;
+                                a[p].x1 = a[p].x;
+                                a[p].t = 0;
+                                a[p].y1 = a[p].y;
+                                a[p].vx1 = a[p].vx;
+                                a[p].vy1 = a[p].vy;
+
+                                a[k].v = a[p].vy * t;
+                                a[k].vx += a[k].v * t;
+                                a[k].vy += a[k].v * u;
+                                a[k].x1 = a[k].x;
+                                a[k].t = 0;
+                                a[k].y1 = a[k].y;
+                                a[k].vx1 = a[k].vx;
+                                a[k].vy1 = a[k].vy;
+                            }
+                        }
+                        a[k].v = sqrt(a[k].vx * a[k].vx + a[k].vy * a[k].vy);
+                        a[p].v = sqrt(a[p].vx * a[p].vx + a[p].vy * a[p].vy);
+
                         //cout << "a[k].vx=" << a[k].vx << endl;
-                       // cout << "a[k].vy=" << a[k].vy << endl;
+                        // cout << "a[k].vy=" << a[k].vy << endl;
                     }
                 }
-            } 
+            }/*
             if ((a[p].x - iran[k].x) * (a[p].x - iran[k].x) + (a[p].y - iran[k].y) * (a[p].y - iran[k].y) < 2500)
             {
                 if (p != k)
@@ -604,24 +751,24 @@ void barkhord(gTexture1 iran[5], gTexture1 a[5], gTexture1 ball[1], double *t, d
                     }
                     if (iran[k].v == 0)
                     {
-                        u= (a[p].y - iran[k].y) / 50.0 * (-1);
-                        t = (a[p].x - iran[k].x) / 50.0 *(-1);
-                       // cout << "m1" << m1;
-                      //  cout << "n" << endl;
+                        u = (a[p].y - iran[k].y) / 50.0 * (-1);
+                        t = (a[p].x - iran[k].x) / 50.0 * (-1);
+                        // cout << "m1" << m1;
+                        //  cout << "n" << endl;
                         iran[k].v = a[p].v * t;
                         a[p].v = a[p].v * u;
                         a[p].vx = a[p].v * u;
                         a[p].vy = a[p].v * t;
                         iran[k].vx = iran[k].v * t;
                         iran[k].vy = iran[k].v * u;
-                       // cout << "a[k].vx=" << a[k].vx << endl;
+                        // cout << "a[k].vx=" << a[k].vx << endl;
                         //cout << "a[k].vy=" << a[k].vy << endl;));
                     }
                 }
             }
             if ((a[p].x - ball[1].x) * (a[p].x - ball[1].x) + (a[p].y - ball[1].y) * (a[p].y - ball[1].y) < 1225)
             {
-                    if (p != k)
+                if (p != k)
                 {
                     if (a[p].v == 0)
                     {
@@ -636,10 +783,10 @@ void barkhord(gTexture1 iran[5], gTexture1 a[5], gTexture1 ball[1], double *t, d
                     }
                     if (ball[1].v == 0)
                     {
-                        u= (a[p].y - ball[1].y) / 35.0 * (-1);
-                        t = (a[p].x - ball[1].x) / 35.0 *(-1);
-                       // cout << "m1" << m1;
-                       // cout << "n" << endl;
+                        u = (a[p].y - ball[1].y) / 35.0 * (-1);
+                        t = (a[p].x - ball[1].x) / 35.0 * (-1);
+                        // cout << "m1" << m1;
+                        // cout << "n" << endl;
                         ball[1].v = a[p].v * t;
                         a[p].v = a[p].v * u;
                         a[p].vx = a[p].v * u;
@@ -647,14 +794,13 @@ void barkhord(gTexture1 iran[5], gTexture1 a[5], gTexture1 ball[1], double *t, d
                         ball[1].vx = ball[1].v * t;
                         ball[1].vy = ball[1].v * u;
                         //cout << "a[k].vx=" << a[k].vx << endl;
-                       // cout << "a[k].vy=" << a[k].vy << endl;));
+                        // cout << "a[k].vy=" << a[k].vy << endl;));
                     }
-                } 
-
+                }
             }
             if ((iran[p].x - ball[1].x) * (iran[p].x - ball[1].x) + (iran[p].y - ball[1].y) * (iran[p].y - ball[1].y) < 1225)
             {
-                     if (p != k)
+                if (p != k)
                 {
                     if (iran[p].v == 0)
                     {
@@ -669,164 +815,448 @@ void barkhord(gTexture1 iran[5], gTexture1 a[5], gTexture1 ball[1], double *t, d
                     }
                     if (ball[1].v == 0)
                     {
-                        u= (iran[p].y - ball[1].y) / 35.0 * (-1);
-                        t = (iran[p].x - ball[1].x) / 35.0 *(-1);
+                        u = (iran[p].y - ball[1].y) / 35.0 * (-1);
+                        t = (iran[p].x - ball[1].x) / 35.0 * (-1);
                         ball[1].v = iran[p].v * t;
                         iran[p].v = iran[p].v * u;
                         iran[p].vx = iran[p].v * u;
                         iran[p].vy = iran[p].v * t;
                         ball[1].vx = ball[1].v * t;
                         ball[1].vy = ball[1].v * u;
-                        
                     }
-                } 
-
-            }
+                }
+            }*/
             if ((iran[p].x - iran[k].x) * (iran[p].x - iran[k].x) + (iran[p].y - iran[k].y) * (iran[p].y - iran[k].y) < 2500)
             {
-                int m5;
-                m5 = m9(iran[p].x, iran[k].x, iran[p].y, iran[k].y);
-            
                 if (p != k)
                 {
                     if (iran[p].v == 0)
                     {
-                        u = (iran[p].y - iran[k].y) / 50.0;
-                        t = (iran[p].x - iran[k].x) / 50.0;
-                        //cout << "k" << endl;
-                        iran[p].v = iran[k].v * t;
-                        iran[k].v = iran[k].v * u;
-                        iran[k].vx = iran[k].v * u;
-                        iran[k].vy = iran[k].v * t;
-                        iran[p].vx = iran[p].v * t;
-                        iran[p].vy = iran[p].v * u;
+                        if (iran[k].vx > 0)
+                        {
+                            if (iran[k].x < iran[p].x)
+                            {
+                                u = (iran[p].y - iran[k].y) / 50.0;
+                                t = (iran[p].x - iran[k].x) / 50.0;
+                                //cout << "k" << endl;
+                                iran[k].v = abs(iran[k].vx) * u;
+                                iran[k].vx = iran[k].v * u;
+                                iran[k].vy = (-1) * iran[k].v * t;
+                                iran[k].x1 = iran[k].x;
+                                iran[k].t = 0;
+                                iran[k].y1 = iran[k].y;
+                                iran[k].vx1 = iran[k].vx;
+                                iran[k].vy1 = iran[k].vy;
+
+                                iran[p].v = abs(a[k].vx) * t;
+                                iran[p].vx = iran[p].v * t;
+                                iran[p].vy = iran[p].v * u;
+                                iran[p].x1 = iran[p].x;
+                                iran[p].t = 0;
+                                iran[p].y1 = iran[p].y;
+                                iran[p].vx1 = iran[p].vx;
+                                iran[p].vy1 = iran[p].vy;
+                            }
+                        }
+                        else if (iran[k].vx < 0)
+                        {
+                            if (iran[k].x > iran[p].x)
+                            {
+                                u = (iran[p].y - iran[k].y) / 50.0;
+                                t = (iran[p].x - iran[k].x) / 50.0;
+                                //cout << "k" << endl;
+                                iran[k].v = abs(iran[k].vx) * u;
+                                iran[k].vx = iran[k].v * u;
+                                iran[k].vy = (-1) * iran[k].v * t;
+                                iran[k].x1 = iran[k].x;
+                                iran[k].t = 0;
+                                iran[k].y1 = iran[k].y;
+                                iran[k].vx1 = iran[k].vx;
+                                iran[k].vy1 = iran[k].vy;
+
+                                iran[p].v = abs(a[k].vx) * t;
+                                iran[p].vx = iran[p].v * t;
+                                iran[p].vy = iran[p].v * u;
+                                iran[p].x1 = iran[p].x;
+                                iran[p].t = 0;
+                                iran[p].y1 = iran[p].y;
+                                iran[p].vx1 = iran[p].vx;
+                                iran[p].vy1 = iran[p].vy;
+                            }
+                        }
+                        if (iran[k].vy > 0)
+                        {
+                            if (iran[k].y < iran[p].y)
+                            {
+                                u = (iran[p].x - iran[k].x) / (50.0);
+                                t = (iran[p].y - iran[k].y) / (50.0);
+
+                                iran[k].v = abs(iran[k].vy) * (u);
+                                iran[k].vx += (-1) * (iran[k].v) * (t);
+                                iran[k].vy += u * (iran[k].v);
+                                iran[k].x1 = iran[k].x;
+                                iran[k].t = 0;
+                                iran[k].y1 = iran[k].y;
+                                iran[k].vx1 = iran[k].vx;
+                                iran[k].vy1 = iran[k].vy;
+
+                                iran[p].v = abs(iran[k].vy) * t;
+                                iran[p].vx += iran[p].v * t;
+                                iran[p].vy += iran[p].v * u;
+                                iran[p].x1 = iran[p].x;
+                                iran[p].t = 0;
+                                iran[p].y1 = iran[p].y;
+                                iran[p].vx1 = iran[p].vx;
+                                iran[p].vy1 = iran[p].vy;
+                            }
+                        }
+                        else if (iran[k].vy < 0)
+                        {
+                            if (iran[k].y > iran[p].y)
+                            {
+                                u = (iran[p].x - iran[k].x) / (50.0);
+                                t = (iran[p].y - iran[k].y) / (50.0);
+
+                                iran[k].v = abs(iran[k].vy) * (u);
+                                iran[k].vx += (-1) * (iran[k].v) * (t);
+                                iran[k].vy += u * (iran[k].v);
+                                iran[k].x1 = iran[k].x;
+                                iran[k].t = 0;
+                                iran[k].y1 = iran[k].y;
+                                iran[k].vx1 = iran[k].vx;
+                                iran[k].vy1 = iran[k].vy;
+
+                                iran[p].v = abs(iran[k].vy) * t;
+                                iran[p].vx += iran[p].v * t;
+                                iran[p].vy += iran[p].v * u;
+                                iran[p].x1 = iran[p].x;
+                                iran[p].t = 0;
+                                iran[p].y1 = iran[p].y;
+                                iran[p].vx1 = iran[p].vx;
+                                iran[p].vy1 = iran[p].vy;
+                            }
+                        }
                     }
+
                     if (iran[k].v == 0)
                     {
-                        u= (iran[p].y - iran[k].y) / 50.0 * (-1);
-                        t = (iran[p].x - iran[k].x) / 50.0 *(-1);
-                       // cout << "m1" << m1;
-                       // cout << "n" << endl;
-                        iran[k].v = iran[p].v * t;
-                        iran[p].v = iran[p].v * u;
-                        iran[p].vx = iran[p].v * u;
-                        iran[p].vy = iran[p].v * t;
-                        iran[k].vx = iran[k].v * t;
-                        iran[k].vy = iran[k].v * u;
+                        if (iran[p].vx > 0)
+                        {
+                            if (iran[p].x < iran[k].x)
+                            {
+                                u = (iran[k].y - iran[p].y) / 50.0;
+                                t = (iran[k].x - iran[p].x) / 50.0;
+                                // cout << "m1" << m1;
+                                // cout << "n" << endl;
+                                iran[k].v = abs(iran[p].vx) * t;
+                                iran[k].vx = iran[k].v * t;
+                                iran[k].vy = iran[k].v * u;
+                                iran[k].x1 = iran[k].x;
+                                iran[k].t = 0;
+                                iran[k].y1 = iran[k].y;
+                                iran[k].vx1 = iran[k].vx;
+                                iran[k].vy1 = iran[k].vy;
+
+                                iran[p].v = abs(iran[p].vx) * u;
+                                iran[p].vx = iran[p].v * u;
+                                iran[p].vy = (-1) * iran[p].v * t;
+                                iran[p].x1 = iran[p].x;
+                                iran[p].t = 0;
+                                iran[p].y1 = iran[p].y;
+                                iran[p].vx1 = iran[p].vx;
+                                iran[p].vy1 = iran[p].vy;
+                            }
+                        }
+                        else if (iran[p].vx < 0)
+                        {
+                            if (iran[p].x > iran[k].x)
+                            {
+                                u = (iran[k].y - iran[p].y) / 50.0;
+                                t = (iran[k].x - iran[p].x) / 50.0;
+                                // cout << "m1" << m1;
+                                // cout << "n" << endl;
+                                iran[k].v = abs(iran[p].vx) * t;
+                                iran[k].vx = iran[k].v * t;
+                                iran[k].vy = iran[k].v * u;
+                                iran[k].x1 = iran[k].x;
+                                iran[k].t = 0;
+                                iran[k].y1 = iran[k].y;
+                                iran[k].vx1 = iran[k].vx;
+                                iran[k].vy1 = iran[k].vy;
+
+                                iran[p].v = abs(iran[p].vx) * u;
+                                iran[p].vx = iran[p].v * u;
+                                iran[p].vy = (-1) * iran[p].v * t;
+                                iran[p].x1 = iran[p].x;
+                                iran[p].t = 0;
+                                iran[p].y1 = iran[p].y;
+                                iran[p].vx1 = iran[p].vx;
+                                iran[p].vy1 = iran[p].vy;
+                            }
+                        }
+                        if (iran[p].vy > 0)
+                        {
+                            if (iran[p].y < iran[k].y)
+                            {
+                                u = (iran[k].x - iran[p].x) / (50.0);
+                                t = (iran[k].y - iran[p].y) / (50.0);
+                                iran[p].v = iran[k].vy * u;
+                                iran[p].vx += (-1) * iran[p].v * u;
+                                iran[p].vy += iran[p].v * t;
+                                iran[p].x1 = iran[p].x;
+                                iran[p].t = 0;
+                                iran[p].y1 = iran[p].y;
+                                iran[p].vx1 = iran[p].vx;
+                                iran[p].vy1 = iran[p].vy;
+
+                                iran[k].v = iran[p].vy * t;
+                                iran[k].vx += iran[k].v * t;
+                                iran[k].vy += iran[k].v * u;
+                                iran[k].x1 = iran[k].x;
+                                iran[k].t = 0;
+                                iran[k].y1 = iran[k].y;
+                                iran[k].vx1 = iran[k].vx;
+                                iran[k].vy1 = iran[k].vy;
+                            }
+                        }
+                        else if (iran[p].vy < 0)
+                        {
+                            if (iran[p].y > iran[k].y)
+                            {
+                                u = (iran[k].x - iran[p].x) / (50.0);
+                                t = (iran[k].y - iran[p].y) / (50.0);
+                                iran[p].v = iran[k].vy * u;
+                                iran[p].vx += (-1) * iran[p].v * u;
+                                iran[p].vy += iran[p].v * t;
+                                iran[p].x1 = iran[p].x;
+                                iran[p].t = 0;
+                                iran[p].y1 = iran[p].y;
+                                iran[p].vx1 = iran[p].vx;
+                                iran[p].vy1 = iran[p].vy;
+
+                                iran[k].v = iran[p].vy * t;
+                                iran[k].vx += iran[k].v * t;
+                                iran[k].vy += iran[k].v * u;
+                                iran[k].x1 = iran[k].x;
+                                iran[k].t = 0;
+                                iran[k].y1 = iran[k].y;
+                                iran[k].vx1 = iran[k].vx;
+                                iran[k].vy1 = iran[k].vy;
+                            }
+                        }
+                        iran[k].v = sqrt(iran[k].vx * iran[k].vx + iran[k].vy * iran[k].vy);
+                        iran[p].v = sqrt(iran[p].vx * iran[p].vx + iran[p].vy * iran[p].vy);
+
                         //cout << "a[k].vx=" << a[k].vx << endl;
-                       // cout << "a[k].vy=" << a[k].vy << endl;
+                        // cout << "a[k].vy=" << a[k].vy << endl;
                     }
                 }
+          //  } 
+           // }
+
+            if (a[k].vx > 0)
+            {
+                a[k].ax = -(abs(a[k].ax));
             }
+            else if (a[k].vx == 0)
+            {
+                a[k].ax = 0;
+            }
+            else
+            {
+                a[k].ax = (abs(a[k].ax));
+            }
+
+            if (a[k].vy > 0)
+            {
+                a[k].ay = -(abs(a[k].ay));
+            }
+            else if (a[k].vy == 0)
+            {
+                a[k].ay = 0;
+            }
+            else
+            {
+                a[k].ay = (abs(a[k].ay));
+            }
+            if (iran[k].vx > 0)
+            {
+                iran[k].ax = -(abs(iran[k].ax));
+            }
+            else if (iran[k].vx == 0)
+            {
+                iran[k].ax = 0;
+            }
+            else
+            {
+                iran[k].ax = (abs(iran[k].ax));
+            }
+
+            if (iran[k].vy > 0)
+            {
+                iran[k].ay = -(abs(iran[k].ay));
+            }
+            else if (iran[k].vy == 0)
+            {
+                iran[k].ay = 0;
+            }
+            else
+            {
+                iran[k].ay = (abs(iran[k].ay));
             }
         }
+        }
+    
     }
+}
 
-void MoveIran(double m, int x, int y, gTexture1 a[5], gTexture1 iran[5], gTexture1 ball[1]);
+//void MoveIran(double m, int x, int y, gTexture1 a[5], gTexture1 iran[5], gTexture1 ball[1]);
 void MoveA(double m, int x, int y, gTexture1 a[5], gTexture1 iran[5], gTexture1 ball[1])
 {
     for (int i = 0; i < 5; i++)
     {
-        //  cout <<"m="<<m<<endl;
-        //   cout<<"m="<<m<<endl;
-        //   cout << "i" << i << endl;
         a[i].vy = ((a[i].v) * SinDetermineA(m, a, x, y, i));
         a[i].vx = ((a[i].v) * CosDetermineA(m, a, x, y, i));
         a[i].ay = ((a[i].a) * SinDetermineA(m, a, x, y, i));
         a[i].ax = ((a[i].a) * CosDetermineA(m, a, x, y, i));
-        cout << "a[i].vy=" << a[i].vy << "\ta[i].vx=" << a[i].vx /*<<"\t"<< a[i].ay<<"\t" << a[i].ax*/
-             << endl;
-        // cout << SinDetermineA(m, a, x, y, i) << "\t" << CosDetermineA(m, a, x, y, i) << endl;
-        double vx1 = a[i].vx;
-        double vy1 = a[i].vy;
-        double x1 = a[i].x;
-        double y1 = a[i].y;
-        //   cout<<"x1="<<x1<<endl;
-        double t = 0;
-        while ((abs(a[i].vx)) > 0.5 || abs(a[i].vy) > 0.5)
-        //   while (((a[i].vx * a[i].vx) + (a[i].vy * a[i].vy)) >= 0. - 1)
-        {
-            // cout << "a[i].ax=" << a[i].ax << "a[i].ay=" << a[i].ay << endl;
-            cout << "a[i].vx=" << a[i].vx << endl;
-            //   cout << "i=" << i << endl;
-            a[i].x = (((0.5) * (a[i].ax) * t * t) + (vx1 * t) + x1);
-            //   cout << ".a[i].x=" << a[i].x << endl;
-            //   cout << ".a[i].y=" << a[i].y <<"t="<<t<<"a[i].ay="<<a[i].ay<<"vy1="<<vy1<< endl;
-            a[i].y = (((0.5) * (a[i].ay) * t * t) + (vy1 * t) + y1);
-            cout << "a[i].vx=" << a[i].vx << endl;
-            a[i].vx = (a[i].ax * t) + vx1;
-            a[i].vy = (a[i].ay * t) + vy1;
-            cout << "a[i].vx=" << a[i].vx << endl;
-            showmap(a, iran, ball);
-            SDL_RenderPresent(gRenderer);
-            barkhord(iran, a, ball, &t, &vx1, &vy1, i, &x1, &y1);
-           
-            t += 0.001;
-            if (abs(a[i].vx) < 0.5)
-                break;
-            if (abs(a[i].vy) < 0.5)
-                break;
-            SDL_RenderClear(gRenderer);
-        }
-        a[i].v = 0;
+        a[i].t = 0;
     }
+    for (int i = 0; i < 5; i++)
+    {
+        a[i].vy = ((a[i].v) * SinDetermineA(m, a, x, y, i));
+        a[i].vx = ((a[i].v) * CosDetermineA(m, a, x, y, i));
+        a[i].ay = ((a[i].a) * SinDetermineA(m, a, x, y, i));
+        a[i].ax = ((a[i].a) * CosDetermineA(m, a, x, y, i));
+        //   a[i].t = 0;
+        //  cout <<"m="<<m<<endl;
+        //   cout<<"m="<<m<<endl;
+        //   cout << "i" << i << endl;
+        //     cout << "a[i].vy=" << a[i].vy << "\ta[i].vx=" << a[i].vx /*<<"\t"<< a[i].ay<<"\t" << a[i].ax*/
+         //   << endl;
+            // cout << SinDetermineA(m, a, x, y, i) << "\t" << CosDetermineA(m, a, x, y, i) << endl;
+            a[i].vx1 = a[i].vx;
+            a[i].vy1 = a[i].vy;
+            a[i].x1 = a[i].x;
+            a[i].y1 = a[i].y;
+            cout << "ghfjlkdsflsjkgjkjsdfk" << a[2].v << endl;
+            //   cout<<"x1="<<x1<<endl;
+            while ((abs(a[i].vx)) > 0.5 || abs(a[i].vy) > 0.5)
+            //   while (((a[i].vx * a[i].vx) + (a[i].vy * a[i].vy)) >= 0. - 1)
+            {
+                // SDL_Delay(10);
+                //      cout << "i=" << i << endl;
+                //   cout << "a[g].x" << a[g].x << "a[g].y=" << a[g].y << endl;
+                //     cout << "a[i].vx=" << a[i].vx << "a[i].vy=" << a[i].vy << endl
+                //          << endl;
+                for (int j = 0; j < 5; j++)
+                {
+                    if (((abs(a[j].vx)) > 0.5 || abs(a[j].vy) > 0.5))
+                    {
+                        //    cout << "a[i].ax=" << a[i].ax << "a[i].ay=" << a[i].ay << endl;
+                        //     cout << "a[j].vx=" << a[j].vx << endl;
+                        //   cout << "i=" << i << endl;
+                        a[j].x = (((0.5) * (a[j].ax) * a[j].t * a[j].t) + (a[j].vx1 * a[j].t) + a[j].x1);
+                        //   cout << ".a[i].x=" << a[i].x << endl;
+                        //   cout << ".a[i].y=" << a[i].y <<"t="<<t<<"a[i].ay="<<a[i].ay<<"vy1="<<vy1<< endl;
+                        a[j].y = (((0.5) * (a[j].ay) * a[j].t * a[j].t) + (a[j].vy1 * a[j].t) + a[j].y1);
+                        //    cout << "a[j].vx=" << a[j].vx << endl;
+                        a[j].vx = (a[j].ax * a[j].t) + a[j].vx1;
+                        a[j].vy = (a[j].ay * a[j].t) + a[j].vy1;
+                        //  cout << "a[i].vx=" << a[j].vx << endl;
+                        showmap(a, iran, ball);
+                        SDL_RenderPresent(gRenderer);
+                        barkhord(iran, a, ball, j);
+
+                        a[j].t += 0.001;
+                        SDL_RenderClear(gRenderer);
+                        /*  if (abs(a[j].vx) < 0.5)
+                        break;
+                    if (abs(a[j].vy) < 0.5)
+                        break;
+                    SDL_RenderClear(gRenderer);
+                }*/
+                    }
+                }
+              
+        }
+    }
+    for (int i = 0; i < 5; i++)
+        a[i].v = 0;
 }
 void MoveIran(double m, int x, int y, gTexture1 a[5], gTexture1 iran[5], gTexture1 ball[1])
 {
     for (int i = 0; i < 5; i++)
     {
-
-        //  m = (double(y) - iran[i].y - 25.0) / (double(x) - iran[i].x - 25.0);
-        //  cout <<"m="<<m<<endl;
-        //   cout<<"m="<<m<<endl;
-        //   cout << "i" << i << endl;
-
-        cout << "i=" << i << "\t"
-             << "mmmmmmmmmmmmmmm=" << m << endl;
-        cout << "x=" << x << "y=" << y << endl;
-        cout << "Cosdetermin" << CosDetermineIran(m, iran, x, y, i) << endl;
-        cout << "sinjkfdks" << SinDetermineIran(m, iran, x, y, i) << endl;
         iran[i].vy = ((iran[i].v) * SinDetermineIran(m, iran, x, y, i));
         iran[i].vx = ((iran[i].v) * CosDetermineIran(m, iran, x, y, i));
         iran[i].ay = ((iran[i].a) * SinDetermineIran(m, iran, x, y, i));
         iran[i].ax = ((iran[i].a) * CosDetermineIran(m, iran, x, y, i));
-        // cout << "a[i].vy=" << a[i].vy << "\ta[i].vx=" << a[i].vx /*<<"\t"<< a[i].ay<<"\t" << a[i].ax*/ << endl;
-        // cout << SinDetermineA(m, a, x, y, i) << "\t" << CosDetermineA(m, a, x, y, i) << endl;
-        double vx1 = iran[i].vx;
-        double vy1 = iran[i].vy;
-        double x1 = iran[i].x;
-        double y1 = iran[i].y;
-        //   cout<<"x1="<<x1<<endl;
-        double t = 0;
-        while ((abs(iran[i].vx)) > 0.5 || abs(iran[i].vy) > 0.5)
-        //   while (((a[i].vx * a[i].vx) + (a[i].vy * a[i].vy)) >= 0. - 1)
-        {
-            //     cout << "sin=" << SinDetermineIran(m, a, x, y, i) << endl;
-            //    cout << "cos=" << CosDetermineIran(m, a, x, y, i) << endl;
-            // cout << "a[i].ax=" << a[i].ax << "a[i].ay=" << a[i].ay << endl;
-            //        cout << "a[i].vx=" << iran[i].vx << endl;
-            //   cout << "i=" << i << endl;
-            iran[i].x = (((0.5) * (iran[i].ax) * t * t) + (vx1 * t) + x1);
-            //   cout << ".a[i].x=" << a[i].x << endl;
-            //   cout << ".a[i].y=" << a[i].y <<"t="<<t<<"a[i].ay="<<a[i].ay<<"vy1="<<vy1<< endl;
-            iran[i].y = (((0.5) * (iran[i].ay) * t * t) + (vy1 * t) + y1);
-            //   cout << "a[i].vx=" << iran[i].vx << endl;
-            iran[i].vx = (iran[i].ax * t) + vx1;
-            iran[i].vy = (iran[i].ay * t) + vy1;
-            cout << "a[i].vx=" << iran[i].vx << endl;
-            showmap(a, iran, ball);
-            SDL_RenderPresent(gRenderer);
-            barkhord(iran, a, ball, &t, &vx1, &vy1, i, &x1, &y1);
-          
-            t += 0.001;
-            if (abs(iran[i].vx) < 0.5)
-                break;
-            if (abs(iran[i].vy) < 0.5)
-                break;
-            SDL_RenderClear(gRenderer);
-        }
-        iran[i].v = 0;
+        iran[i].t = 0;
     }
+    for (int i = 0; i < 5; i++)
+    {
+
+        //  m = (double(y) - iran[i].y - 25.0) / (double(x) - iran[i].x - 25.0);
+        //  cout <<"m="<<m<<endl;
+
+        //   cout<<"m="<<m<<endl;
+        //   cout << "i" << i << endl;
+
+        /*   cout << "i=" << i << "\t"
+             << "mmmmmmmmmmmmmmm=" << m << endl;
+        cout << "x=" << x << "y=" << y << endl;
+        cout << "Cosdetermin" << CosDetermineIran(m, iran, x, y, i) << endl;
+        cout << "sinjkfdks" << SinDetermineIran(m, iran, x, y, i) << endl;*/
+        iran[i].vy = ((iran[i].v) * SinDetermineIran(m, iran, x, y, i));
+        iran[i].vx = ((iran[i].v) * CosDetermineIran(m, iran, x, y, i));
+        iran[i].ay = ((iran[i].a) * SinDetermineIran(m, iran, x, y, i));
+        iran[i].ax = ((iran[i].a) * CosDetermineIran(m, iran, x, y, i));
+        // cout << "a[i].vy=" << a[i].vy << "\ta[i].vx=" << a[i].vx /*<<"\t"<< a[i].ay<<"\t" << a[i].ax << endl;
+        // cout << SinDetermineA(m, a, x, y, i) << "\t" << CosDetermineA(m, a, x, y, i) << endl;
+        iran[i].vx1 = iran[i].vx;
+        iran[i].vy1 = iran[i].vy;
+        iran[i].x1 = iran[i].x;
+        iran[i].y1 = iran[i].y;
+        //   cout<<"x1="<<x1<<endl;
+
+        while ((abs(iran[i].vx)) > 0.5 || abs(iran[i].vy) > 0.5)
+        //   while (((a[i].vx * a[i].vx) + (a[i].vy
+        //   while (((a[i].vx * a[i].vx) + (a[i].vy
+        {
+            for (int j = 0; j < 5; j++)
+            //   while (((a[i].vx * a[i].vx) + (a[i].vy * a[i].vy)) >= 0. - 1)
+            {
+                if ((abs(iran[j].vx)) > 0.5 || abs(iran[j].vy) > 0.5)
+                {
+                    //     cout << "sin=" << SinDetermineIran(m, a, x, y, i) << endl;
+                    //    cout << "cos=" << CosDetermineIran(m, a, x, y, i) << endl;
+                    // cout << "a[i].ax=" << a[i].ax << "a[i].ay=" << a[i].ay << endl;
+                    //        cout << "a[i].vx=" << iran[i].vx << endl;
+                    //   cout << "i=" << i << endl;
+                    iran[j].x = (((0.5) * (iran[j].ax) * iran[j].t * iran[j].t) + (iran[j].vx1 * iran[j].t) + iran[j].x1);
+                    //   cout << ".a[i].x=" << a[i].x << endl;
+                    //   cout << ".a[i].y=" << a[i].y <<"t="<<t<<"a[i].ay="<<a[i].ay<<"vy1="<<vy1<< endl;
+                    iran[j].y = (((0.5) * (iran[j].ay) * iran[j].t * iran[j].t) + (iran[j].vy1 * iran[j].t) + iran[j].y1);
+                    //   cout << "a[i].vx=" << iran[i].vx << endl;
+                    iran[j].vx = (iran[j].ax * iran[j].t) + iran[j].vx1;
+                    iran[j].vy = (iran[j].ay * iran[j].t) + iran[j].vy1;
+                    cout << "a[i].vx=" << iran[j].vx << endl;
+                    showmap(a, iran, ball);
+                    SDL_RenderPresent(gRenderer);
+                    barkhord(iran, a, ball, j);
+
+                    iran[j].t += 0.001;
+                    /*    if (abs(iran[i].vx) < 0.5)
+                    break;
+                if (abs(iran[i].vy) < 0.5)
+                    break;*/
+                    SDL_RenderClear(gRenderer);
+                }
+            }
+        }
+    }
+    for (int i = 0; i < 5; i++)
+        iran[i].v = 0;
 }
 
 int main()
@@ -875,7 +1305,7 @@ int main()
             while (!quit)
             {
                 SDL_GetMouseState(&x, &y);
-                cout << "x=" << x << "y=" << y << endl;
+                //  cout << "x=" << x << "y=" << y << endl;
                 showmap(a, iran, ball);
 
                 SDL_RenderPresent(gRenderer);
@@ -960,6 +1390,7 @@ int main()
                     }
                     else
                     {
+                        cout << "ghfjlkdsflsjkgjkjsdfk" << a[2].v << endl;
                         MoveA((m), x, y, a, iran, ball);
                         double z = 0;
                         if (e.type == SDL_MOUSEMOTION || e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP)
